@@ -4,9 +4,10 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRouter } from "next/navigation";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 
 import Link from "next/link";
+import { TransitionContext } from "@/context/TransitionContext";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -14,6 +15,8 @@ const LandingPage = () => {
   const [loading, setLoading] = useState(true);
   const container = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const { timeline } = useContext(TransitionContext);
 
   useGSAP(
     () => {
@@ -53,24 +56,35 @@ const LandingPage = () => {
       // console.log("width = ", screenWidth);
 
       gsap.fromTo(
-        ".hello",
+        container.current,
         {
           x: screenWidth,
         },
         {
           x: 0,
           duration: 1,
-          ease: "power4.out",
+          ease: "power2.out",
         }
       );
+
+      const totalContentWidth = sections.length * window.innerWidth;
+
+      timeline.add(
+        gsap.to(container.current, {
+          x: -totalContentWidth,
+          duration: 0.5,
+          ease: "power2.in",
+        })
+      );
     },
+
     { scope: container }
   );
 
   return (
     <>
       <div ref={container} id="mainContainer">
-        <div className="flex h-screen hello ">
+        <div className="flex h-screen  ">
           <div className="bg-blue-400  text-3xl text-white panel h-[75vh] my-auto  w-[96vw] ml-[4vw] flex-shrink-0 ">
             Page1
             <Link href="/portfolio">Portfolio</Link>

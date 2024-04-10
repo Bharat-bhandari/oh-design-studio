@@ -5,8 +5,9 @@ import { useGSAP } from "@gsap/react";
 import { useRouter } from "next/navigation";
 
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import Link from "next/link";
+import { TransitionContext } from "@/context/TransitionContext";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -16,14 +17,13 @@ const Portfolio = () => {
   const router = useRouter();
 
   const hello = useRef();
+  const { timeline } = useContext(TransitionContext);
 
   useGSAP(
     () => {
       const sections: HTMLDivElement[] = gsap.utils.toArray(".panel");
 
       const amountToScroll = 100 * (sections.length - 1);
-
-      console.log(amountToScroll);
 
       gsap.to(sections, {
         xPercent: -amountToScroll, // amount to scroll
@@ -58,11 +58,20 @@ const Portfolio = () => {
         {
           x: 0,
           duration: 1,
-          ease: "power4.out",
+          ease: "power2.out",
         }
       );
-    },
 
+      const totalContentWidth = sections.length * window.innerWidth;
+
+      timeline.add(
+        gsap.to(container.current, {
+          x: totalContentWidth,
+          duration: 0.5,
+          ease: "power2.in",
+        })
+      );
+    },
     { scope: container }
   );
 
@@ -76,12 +85,12 @@ const Portfolio = () => {
           <div className="bg-green-400 text-3xl text-white panel h-[75vh] my-auto w-screen flex-shrink-0 ">
             Page2
           </div>
-          <div className="bg-yellow-400 text-white text-3xl  panel h-[75vh] my-auto w-screen flex-shrink-0 ">
+          {/* <div className="bg-yellow-400 text-white text-3xl  panel h-[75vh] my-auto w-screen flex-shrink-0 ">
             Page3
           </div>
           <div className="bg-orange-400 text-3xl text-white panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
             Page4
-          </div>
+          </div> */}
         </div>
       </div>
     </>

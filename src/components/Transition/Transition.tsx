@@ -1,48 +1,36 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+"use client";
+
+import React, {
+  ReactNode,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { TransitionContext } from "@/context/TransitionContext";
 
 gsap.registerPlugin(useGSAP);
 
 const Transition = ({ children }: { children: ReactNode }) => {
   const [displayChildren, setDisplayChildren] = useState(children);
 
-  const container = useRef<HTMLDivElement>(null);
+  const { timeline } = useContext(TransitionContext);
 
   useGSAP(() => {
     if (
       (children as React.ReactElement).key !==
       (displayChildren as React.ReactElement).key
     ) {
-      const containerElement = container.current;
-
-      console.log(containerElement);
-
-      if (containerElement) {
-        const sections: HTMLDivElement[] = Array.from(
-          containerElement.querySelectorAll(".panel")
-        );
-
-        const totalContentWidth = sections.length * window.innerWidth;
-
-        const helloElement = containerElement.querySelector(".hello");
-
-        if (helloElement) {
-          gsap
-            .to(helloElement, {
-              x: -totalContentWidth,
-              duration: 0.5,
-              ease: "power2.in",
-            })
-            .then(() => {
-              setDisplayChildren(children);
-            });
-        }
-      }
+      timeline.play().then(() => {
+        setDisplayChildren(children);
+        timeline.pause().clear();
+      });
     }
   }, [children]);
 
-  return <div ref={container}>{displayChildren}</div>;
+  return <div>{displayChildren}</div>;
 };
 
 export default Transition;
