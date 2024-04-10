@@ -1,9 +1,17 @@
 import gsap from "gsap";
-import React, { createContext, useState } from "react";
+import React, { ReactNode, createContext, useState } from "react";
 
-const TransitionContext = createContext({});
+interface TransitionContextProps {
+  timeline: gsap.core.Timeline;
+  setTimeline: React.Dispatch<React.SetStateAction<gsap.core.Timeline>>;
+}
 
-const TransitionProvider = ({ children }) => {
+const TransitionContext = createContext<TransitionContextProps>({
+  timeline: gsap.timeline({ paused: true }),
+  setTimeline: () => {}, // Just a dummy function for initial value
+});
+
+const TransitionProvider = ({ children }: { children: ReactNode }) => {
   const [timeline, setTimeline] = useState(() => {
     return gsap.timeline({ paused: true });
   });
