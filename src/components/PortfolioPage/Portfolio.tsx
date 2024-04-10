@@ -2,7 +2,8 @@
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useRouter } from "next/navigation";
+
+import { usePathname } from "next/navigation";
 
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useContext, useRef } from "react";
@@ -14,10 +15,12 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const Portfolio = () => {
   const container = useRef<HTMLDivElement>(null);
 
-  const router = useRouter();
+  const pathname = usePathname();
 
   const hello = useRef();
   const { timeline } = useContext(TransitionContext);
+
+  const { setPreviousRoute } = useContext(TransitionContext);
 
   useGSAP(
     () => {
@@ -61,6 +64,8 @@ const Portfolio = () => {
           ease: "power2.out",
         }
       );
+
+      setPreviousRoute(pathname);
 
       const totalContentWidth = sections.length * window.innerWidth;
 

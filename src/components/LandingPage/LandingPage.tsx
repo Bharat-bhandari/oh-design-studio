@@ -2,9 +2,10 @@
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import Link from "next/link";
 import { TransitionContext } from "@/context/TransitionContext";
@@ -12,11 +13,14 @@ import { TransitionContext } from "@/context/TransitionContext";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const LandingPage = () => {
-  const [loading, setLoading] = useState(true);
   const container = useRef<HTMLDivElement>(null);
-  const router = useRouter();
+
+  const pathname = usePathname();
 
   const { timeline } = useContext(TransitionContext);
+
+  const { previousRoute } = useContext(TransitionContext);
+  const { setPreviousRoute } = useContext(TransitionContext);
 
   useGSAP(
     () => {
@@ -53,21 +57,40 @@ const LandingPage = () => {
 
       const screenWidth = window.innerWidth;
 
+      const totalContentWidth = sections.length * window.innerWidth;
       // console.log("width = ", screenWidth);
 
-      gsap.fromTo(
-        container.current,
-        {
-          x: screenWidth,
-        },
-        {
-          x: 0,
-          duration: 1,
-          ease: "power2.out",
-        }
-      );
+      const tl = gsap.timeline();
 
-      const totalContentWidth = sections.length * window.innerWidth;
+      if (previousRoute === "") {
+        tl.fromTo(
+          container.current,
+          {
+            x: screenWidth,
+          },
+          {
+            x: 0,
+            duration: 1,
+            ease: "power2.out",
+          }
+        );
+      } else if (previousRoute === "/portfolio") {
+        tl.fromTo(
+          container.current,
+          {
+            x: -totalContentWidth,
+          },
+          {
+            x: 0,
+          }
+        );
+      }
+
+      setPreviousRoute(pathname);
+
+      console.log("previous route", previousRoute);
+
+      // console.log("Previous route:", previousRoute, typeof previousRoute);
 
       timeline.add(
         gsap.to(container.current, {
