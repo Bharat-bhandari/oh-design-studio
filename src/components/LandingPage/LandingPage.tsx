@@ -22,24 +22,6 @@ const LandingPage = () => {
   const { previousRoute } = useContext(TransitionContext);
   const { setPreviousRoute } = useContext(TransitionContext);
 
-  const [scrollAmount, setScrollAmount] = useState(0);
-
-  // console.log("ScrollAmount=", scrollAmount);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = document.documentElement.scrollTop;
-
-      setScrollAmount(scrollTop);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   useGSAP(
     () => {
       const sections: HTMLDivElement[] = gsap.utils.toArray(".panel");
@@ -76,51 +58,36 @@ const LandingPage = () => {
       const screenWidth = window.innerWidth;
 
       const totalContentWidth = sections.length * window.innerWidth;
-      // console.log("width = ", screenWidth);
 
       const tl = gsap.timeline();
 
-      tl.fromTo(
-        container.current,
-        {
-          x: screenWidth,
-        },
-        {
-          x: 0,
-          duration: 1,
-          ease: "power2.out",
-        }
-      );
-
-      // if (previousRoute === "") {
-      //   tl.fromTo(
-      //     container.current,
-      //     {
-      //       x: screenWidth,
-      //     },
-      //     {
-      //       x: 0,
-      //       duration: 1,
-      //       ease: "power2.out",
-      //     }
-      //   );
-      // } else if (previousRoute === "/portfolio") {
-      //   tl.fromTo(
-      //     container.current,
-      //     {
-      //       x: -totalContentWidth,
-      //     },
-      //     {
-      //       x: 0,
-      //     }
-      //   );
-      // }
+      if (previousRoute === "") {
+        tl.fromTo(
+          container.current,
+          {
+            x: screenWidth,
+          },
+          {
+            x: 0,
+            duration: 1,
+            ease: "power2.out",
+          }
+        );
+      } else if (previousRoute === "/portfolio") {
+        tl.fromTo(
+          container.current,
+          {
+            x: -totalContentWidth,
+          },
+          {
+            x: 0,
+          }
+        );
+      }
 
       setPreviousRoute(pathname);
 
       console.log("previous route", previousRoute);
-
-      // console.log("Previous route:", previousRoute, typeof previousRoute);
 
       timeline.add(
         gsap.to(container.current, {
@@ -140,18 +107,24 @@ const LandingPage = () => {
         <div className="flex h-screen  ">
           <div className="bg-blue-400  text-3xl text-white panel h-[75vh] my-auto  w-[96vw] ml-[4vw] flex-shrink-0 ">
             Page1
-            <Link href="/portfolio">Portfolio</Link>
+            <Link scroll={false} href="/portfolio">
+              Portfolio
+            </Link>
           </div>
           <div className="bg-green-400 text-3xl text-white panel h-[75vh] my-auto w-screen flex-shrink-0 ">
             Page2
           </div>
           <div className="bg-yellow-400 text-white text-3xl  panel h-[75vh] my-auto w-screen flex-shrink-0 ">
             Page3
-            <Link href="/portfolio">Portfolio</Link>
+            <Link scroll={false} href="/portfolio">
+              Portfolio
+            </Link>
           </div>
           <div className="bg-orange-400 text-3xl text-white panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
             Page4
-            <Link href="/portfolio">Portfolio</Link>
+            <Link scroll={false} href="/portfolio">
+              Portfolio
+            </Link>
           </div>
         </div>
       </div>

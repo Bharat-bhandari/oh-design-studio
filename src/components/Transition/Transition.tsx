@@ -24,6 +24,7 @@ const Transition = ({ children }: { children: ReactNode }) => {
       (displayChildren as React.ReactElement).key
     ) {
       timeline.play().then(() => {
+        window.scrollTo(0, 0);
         setDisplayChildren(children);
         timeline.pause().clear();
       });
