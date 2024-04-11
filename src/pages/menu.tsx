@@ -1,13 +1,43 @@
+import { TransitionContext } from "@/context/TransitionContext";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import React, { useRef } from "react";
+import { usePathname } from "next/navigation";
+import React, { useContext, useRef } from "react";
 
 const MainMenu = () => {
   const container = useRef<HTMLDivElement>(null);
 
+  const pathname = usePathname();
+
+  const { timeline } = useContext(TransitionContext);
+  const { previousRoute } = useContext(TransitionContext);
+  const { setPreviousRoute } = useContext(TransitionContext);
+
   useGSAP(
     () => {
       gsap.set(".overlay", { xPercent: -101 });
+
+      const screenWidth = window.innerWidth;
+
+      gsap.fromTo(
+        container.current,
+        { x: -screenWidth },
+        {
+          x: 0,
+          duration: 1,
+          ease: "power2.out",
+        }
+      );
+
+      setPreviousRoute(pathname);
+
+      timeline.add(
+        gsap.to(container.current, {
+          x: -screenWidth,
+          duration: 0.5,
+          ease: "power2.in",
+        })
+      );
     },
     { scope: container }
   );

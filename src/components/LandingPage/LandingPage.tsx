@@ -44,12 +44,12 @@ const LandingPage = () => {
               document.querySelector<HTMLElement>("#mainContainer");
             return mainContainer ? `+=${mainContainer.offsetWidth}` : "+=0";
           },
-          markers: {
-            startColor: "purple",
-            endColor: "fuchsia",
-            fontSize: "2rem",
-            indent: 200,
-          },
+          // markers: {
+          //   startColor: "purple",
+          //   endColor: "fuchsia",
+          //   fontSize: "2rem",
+          //   indent: 200,
+          // },
         },
       });
 
@@ -61,7 +61,7 @@ const LandingPage = () => {
 
       const tl = gsap.timeline();
 
-      if (previousRoute === "") {
+      if (previousRoute === "" || previousRoute === "/menu") {
         tl.fromTo(
           container.current,
           {
@@ -91,7 +91,7 @@ const LandingPage = () => {
 
       timeline.add(
         gsap.to(container.current, {
-          x: -totalContentWidth,
+          x: totalContentWidth,
           duration: 0.5,
           ease: "power2.in",
         })
@@ -107,24 +107,15 @@ const LandingPage = () => {
         <div className="flex h-screen  ">
           <div className="bg-blue-400  text-3xl text-white panel h-[75vh] my-auto  w-[96vw] ml-[4vw] flex-shrink-0 ">
             Page1
-            <Link scroll={false} href="/portfolio">
-              Portfolio
-            </Link>
           </div>
           <div className="bg-green-400 text-3xl text-white panel h-[75vh] my-auto w-screen flex-shrink-0 ">
             Page2
           </div>
           <div className="bg-yellow-400 text-white text-3xl  panel h-[75vh] my-auto w-screen flex-shrink-0 ">
             Page3
-            <Link scroll={false} href="/portfolio">
-              Portfolio
-            </Link>
           </div>
           <div className="bg-orange-400 text-3xl text-white panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
             Page4
-            <Link scroll={false} href="/portfolio">
-              Portfolio
-            </Link>
           </div>
         </div>
       </div>
