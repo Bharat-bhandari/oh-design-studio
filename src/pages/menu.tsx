@@ -1,6 +1,7 @@
 import { TransitionContext } from "@/context/TransitionContext";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useContext, useRef } from "react";
 
@@ -55,8 +56,10 @@ const MainMenu = () => {
       <div ref={container} className="h-screen flex">
         <div className=" my-auto text-3xl w-full flex text-white panel h-[75vh] flex-col items-center">
           <div className="justify-between flex flex-col h-full overflow-hidden">
-            <div
-              className=" w-fit text-[13.5vh] leading-none font-semibold text-black us px-2 relative"
+            <Link
+              href="/about-us"
+              scroll={false}
+              className=" w-fit text-[13.5vh] leading-none font-semibold text-black us px-2 relative no-underline"
               onMouseEnter={() => onMouseEnter("us")}
               onMouseLeave={() => onMouseLeave("us")}
             >
@@ -64,9 +67,12 @@ const MainMenu = () => {
                 Us.
                 <div className="bg-yellowMenu absolute w-full  h-full top-0 left-0 -z-10 overlay"></div>
               </div>
-            </div>
-            <div
-              className=" text-[13.5vh] leading-none  w-fit font-semibold text-black px-2 work relative"
+            </Link>
+
+            <Link
+              href="/work"
+              scroll={false}
+              className=" text-[13.5vh] leading-none  w-fit font-semibold text-black px-2 work relative no-underline"
               onMouseEnter={() => onMouseEnter("work")}
               onMouseLeave={() => onMouseLeave("work")}
             >
@@ -74,9 +80,12 @@ const MainMenu = () => {
                 Work.
                 <div className="bg-yellowMenu absolute w-full  h-full top-0 left-0 -z-10 overlay"></div>
               </div>
-            </div>
-            <div
-              className=" text-[13.5vh] leading-none  w-fit font-semibold thoughts text-black px-2 relative"
+            </Link>
+
+            <Link
+              href="/thoughts"
+              scroll={false}
+              className=" text-[13.5vh] leading-none  w-fit font-semibold thoughts text-black px-2 relative no-underline"
               onMouseEnter={() => onMouseEnter("thoughts")}
               onMouseLeave={() => onMouseLeave("thoughts")}
             >
@@ -84,9 +93,12 @@ const MainMenu = () => {
                 Thoughts.
                 <div className="bg-yellowMenu absolute w-full  h-full top-0 left-0 -z-10 overlay"></div>
               </div>
-            </div>
-            <div
-              className=" text-[13.5vh] leading-none  w-fit font-semibold career text-black px-2 relative"
+            </Link>
+
+            <Link
+              href="/career"
+              scroll={false}
+              className=" text-[13.5vh] leading-none  w-fit font-semibold career text-black px-2 relative no-underline"
               onMouseEnter={() => onMouseEnter("career")}
               onMouseLeave={() => onMouseLeave("career")}
             >
@@ -94,9 +106,12 @@ const MainMenu = () => {
                 Careers.
                 <div className="bg-yellowMenu absolute w-full  h-full top-0 left-0 -z-10 overlay"></div>
               </div>
-            </div>
-            <div
-              className=" text-[13.5vh] leading-none  w-fit font-semibold contact text-black px-2 relative"
+            </Link>
+
+            <Link
+              href="/contact"
+              scroll={false}
+              className=" text-[13.5vh] leading-none  w-fit font-semibold contact text-black px-2 relative no-underline"
               onMouseEnter={() => onMouseEnter("contact")}
               onMouseLeave={() => onMouseLeave("contact")}
             >
@@ -104,7 +119,7 @@ const MainMenu = () => {
                 Contact.
                 <div className="bg-yellowMenu absolute w-full  h-full top-0 left-0 -z-10 overlay"></div>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </div>
