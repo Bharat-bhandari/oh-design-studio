@@ -61,16 +61,22 @@ const LandingPage = () => {
 
       const tl = gsap.timeline();
 
-      if (previousRoute === "" || previousRoute === "/menu") {
+      if (
+        previousRoute === "" ||
+        previousRoute === "/menu" ||
+        previousRoute === "/contact"
+      ) {
         tl.fromTo(
           container.current,
           {
             x: screenWidth,
+            autoAlpha: 0,
           },
           {
             x: 0,
             duration: 1,
             ease: "power2.out",
+            autoAlpha: 1,
           }
         );
       } else if (previousRoute === "/portfolio") {
@@ -103,7 +109,7 @@ const LandingPage = () => {
 
   return (
     <>
-      <div ref={container} id="mainContainer">
+      <div ref={container} id="mainContainer" className="invisible">
         <div className="flex h-screen  ">
           <div className="bg-blue-400  text-3xl text-white panel h-[75vh] my-auto  w-[96vw] ml-[4vw] flex-shrink-0 ">
             Page1
