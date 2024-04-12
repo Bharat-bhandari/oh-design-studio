@@ -13,7 +13,9 @@ const config: Config = {
       },
       colors: {
         yellowMenu: "#fced00",
+        yellowBg: "#fff500",
         textBlack: "#110c0c",
+        textGray: "#959999",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
