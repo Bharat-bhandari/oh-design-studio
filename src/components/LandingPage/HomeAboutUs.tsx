@@ -13,9 +13,9 @@ const HomeAboutUs = () => {
           San Francisco.
         </div>
         <div className="text-black text-base max-w-[60%]">
-          Since Michael Ferdman founded Firstborn in 1997, we’ve seen the
+          Since Michael Ferdman founded Firstborn in 1997, we've seen the
           digital landscape change dramatically. Our industry has transformed,
-          our clients’ businesses and their challenges have become more complex,
+          our clients businesses and their challenges have become more complex,
           consumer behavior has shifted, and we, as a company, have evolved with
           those changes along with it.
         </div>

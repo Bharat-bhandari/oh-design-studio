@@ -41,9 +41,9 @@ const ContactPage = () => {
           <div className="text-6xl font-semibold text-textGray">Lets talk</div>
           <p>
             We are always happy to make valuable new contacts and are looking
-            forward to receiving your mail or call. Even if you’re not sure
-            we’ll be the right ones for your project. We’re always open to a
-            chat and will be happy to help – of course also in person, wherever
+            forward to receiving your mail or call. Even if you're not sure
+            we'll be the right ones for your project. We're always open to a
+            chat and will be happy to help - of course also in person, wherever
             you are.
           </p>
         </div>

@@ -15,19 +15,19 @@ const AboutUsSection1 = () => {
           <p>
             Twenty-two years ago, we were founded on the belief that smart ideas
             and rich interactive experiences built with craft and creativity
-            would move our clients’ businesses forward. We still believe that
+            would move our clients businesses forward. We still believe that
             today.
           </p>
           <p>
             Twenty-two years ago, we were founded on the belief that smart ideas
             and rich interactive experiences built with craft and creativity
-            would move our clients’ businesses forward. We still believe that
+            would move our clients businesses forward. We still believe that
             today.
           </p>
           <p>
             Twenty-two years ago, we were founded on the belief that smart ideas
             and rich interactive experiences built with craft and creativity
-            would move our clients’ businesses forward. We still believe that
+            would move our clients businesses forward. We still believe that
             today.
           </p>
         </div>

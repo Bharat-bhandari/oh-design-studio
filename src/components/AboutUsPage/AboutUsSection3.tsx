@@ -18,9 +18,9 @@ const AboutUsSection3 = () => {
             </div>
           </div>
           <div className="w-[25vw] text-sm ">
-            Since Michael Ferdman founded Firstborn in 1997, we’ve seen the
+            Since Michael Ferdman founded Firstborn in 1997, we've seen the
             digital landscape change dramatically. Our industry has transformed,
-            our clients’ businesses and their challenges have become more
+            our clients businesses and their challenges have become more
             complex, consumer behavior has shifted, and we, as a company.
             <li>SUB HEADER</li>
             <li>SUB HEADER</li>
