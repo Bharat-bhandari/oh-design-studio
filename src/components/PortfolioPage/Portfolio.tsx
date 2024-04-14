@@ -9,6 +9,8 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useContext, useRef } from "react";
 import Link from "next/link";
 import { TransitionContext } from "@/context/TransitionContext";
+import HomeFooter from "../LandingPage/HomeFooter";
+import HomePortfolio from "../LandingPage/HomePortfolio";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -84,18 +86,16 @@ const Portfolio = () => {
     <>
       <div ref={container} id="mainContainer">
         <div className="flex h-screen hello ">
-          <div className="bg-purple-400  text-3xl text-white panel h-[75vh] my-auto  w-[96vw] ml-[4vw] flex-shrink-0 ">
-            Portfolio Page
+          <div className="panel h-[75vh] my-auto  w-[96vw] ml-[4vw] flex-shrink-0 ">
+            <HomePortfolio />
           </div>
-          <div className="bg-green-400 text-3xl text-white panel h-[75vh] my-auto w-screen flex-shrink-0 ">
-            Page2
+          <div className=" panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
+            <HomePortfolio />
           </div>
-          {/* <div className="bg-yellow-400 text-white text-3xl  panel h-[75vh] my-auto w-screen flex-shrink-0 ">
-            Page3
+
+          <div className="panel h-[75vh] my-auto w-[96vw] pr-[4vw]   flex-shrink-0 ">
+            <HomeFooter />
           </div>
-          <div className="bg-orange-400 text-3xl text-white panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
-            Page4
-          </div> */}
         </div>
       </div>
     </>

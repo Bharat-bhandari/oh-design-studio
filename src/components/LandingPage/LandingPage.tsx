@@ -136,7 +136,7 @@ const LandingPage = () => {
                 // justifyContent: "center",
               }}
             >
-              <div className="flex justify-between h-full w-full items-end px-[6.5vw] ">
+              <div className="flex justify-between h-full w-full items-end px-[6.5vw] text-white">
                 <div className="pb-[6.5vh]">
                   <div className=" text-sm font-semibold">CLIENT NAME</div>
                   <div className=" text-4xl font-semibold ">WE CREATE</div>
@@ -168,7 +168,7 @@ const LandingPage = () => {
                 // justifyContent: "center",
               }}
             >
-              <div className="flex justify-between h-full w-full items-end px-[6.5vw] ">
+              <div className="flex justify-between h-full w-full items-end px-[6.5vw] text-white">
                 <div className="pb-[6.5vh]">
                   <div className=" text-sm font-semibold">CLIENT NAME</div>
                   <div className=" text-4xl font-semibold ">WE CREATE</div>
@@ -200,7 +200,7 @@ const LandingPage = () => {
                 // justifyContent: "center",
               }}
             >
-              <div className="flex justify-between h-full w-full items-end px-[6.5vw] ">
+              <div className="flex justify-between h-full w-full items-end px-[6.5vw] text-white">
                 <div className="pb-[6.5vh]">
                   <div className=" text-sm font-semibold">CLIENT NAME</div>
                   <div className=" text-4xl font-semibold ">WE CREATE</div>
