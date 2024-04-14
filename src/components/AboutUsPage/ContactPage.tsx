@@ -18,21 +18,21 @@ const ContactPage = () => {
     message: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  //   const handleChange = (e) => {
+  //     const { name, value } = e.target;
+  //     setFormData({
+  //       ...formData,
+  //       [name]: value,
+  //     });
+  //   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can perform validation here before sending the data
-    console.log(formData);
-    // Here you would typically send the form data to your backend or handle it accordingly
-    // For simplicity, I'm just logging the form data to the console
-  };
+  //   const handleSubmit = (e) => {
+  //     e.preventDefault();
+  //     // You can perform validation here before sending the data
+  //     console.log(formData);
+  //     // Here you would typically send the form data to your backend or handle it accordingly
+  //     // For simplicity, I'm just logging the form data to the console
+  //   };
 
   return (
     <div className="px-[6.5vw] h-full">
@@ -48,7 +48,8 @@ const ContactPage = () => {
           </p>
         </div>
         <div className="col-span-4 ">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4 pl-10">
+          {/* <form onSubmit={handleSubmit} className="flex flex-col gap-4 pl-10"> */}
+          <form className="flex flex-col gap-4 pl-10">
             <div>
               <label htmlFor="fullName" className="flex py-2">
                 Full name
@@ -59,7 +60,7 @@ const ContactPage = () => {
                 id="fullName"
                 name="fullName"
                 value={formData.fullName}
-                onChange={handleChange}
+                // onChange={handleChange}
                 required
               />
             </div>
@@ -73,7 +74,7 @@ const ContactPage = () => {
                 id="email"
                 name="email"
                 value={formData.email}
-                onChange={handleChange}
+                // onChange={handleChange}
                 required
               />
             </div>
@@ -87,7 +88,7 @@ const ContactPage = () => {
                 id="phone"
                 name="phone"
                 value={formData.phone}
-                onChange={handleChange}
+                // onChange={handleChange}
                 required
               />
             </div>
@@ -100,7 +101,7 @@ const ContactPage = () => {
                 id="message"
                 name="message"
                 value={formData.message}
-                onChange={handleChange}
+                // onChange={handleChange}
                 required
               ></textarea>
             </div>
