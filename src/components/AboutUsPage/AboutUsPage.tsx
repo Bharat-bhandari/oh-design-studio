@@ -12,6 +12,8 @@ import { TransitionContext } from "@/context/TransitionContext";
 import HomeFooter from "../LandingPage/HomeFooter";
 import HomeClients from "../LandingPage/HomeClients";
 import HomeAboutUs2 from "../LandingPage/HomeAboutUs2";
+import AboutUsSection1 from "./AboutUsSection1";
+import AboutUsSection3 from "./AboutUsSection3";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -89,20 +91,14 @@ const AboutUsPage = () => {
     <>
       <div ref={container} id="mainContainer">
         <div className="flex h-screen hello ">
-          <div className="bg-purple-400  text-3xl text-white panel h-[75vh] my-auto  w-[96vw] ml-[4vw] flex-shrink-0 ">
-            AboutUsPage Page
+          <div className="bg-yellowBg panel h-[75vh] my-auto  w-[96vw] ml-[4vw] flex-shrink-0 ">
+            <AboutUsSection1 />
           </div>
-          <div className="bg-green-400 text-3xl text-white panel h-[75vh] my-auto w-screen flex-shrink-0 ">
-            Page2
-          </div>
-          {/* <div className="bg-yellow-400 text-white text-3xl  panel h-[75vh] my-auto w-screen flex-shrink-0 ">
-            Page3
-          </div>
-          <div className="bg-orange-400 text-3xl text-white panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
-            Page4
-          </div> */}
           <div className="bg-yellowBg panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
             <HomeAboutUs2 />
+          </div>
+          <div className="bg-yellowBg panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
+            <AboutUsSection3 />
           </div>
           <div className=" panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
             <HomeClients />
