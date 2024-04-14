@@ -14,7 +14,7 @@ const CareerIntroSection = () => {
           <div>OH! Design</div>
         </div>
         <div className="text-xl w-[18vw]">
-          Split polished on the streets of Hell's Kitchen. Refined at the table
+          Split polished on the streets of Hells Kitchen. Refined at the table
           of Peter Luger
         </div>
         <div className="text-sm w-[22vw]">
@@ -45,7 +45,7 @@ const CareerIntroSection = () => {
           </div>
         </div>
         <div>
-          <div className="text-xl">Didn't find what you were looking for?</div>
+          <div className="text-xl">Didnt find what you were looking for?</div>
           <div className="flex items-center gap-2">
             <div className="font-semibold">LETS TALK</div>
             <Image src={linkBtn} width={17} height={17} alt="link" />

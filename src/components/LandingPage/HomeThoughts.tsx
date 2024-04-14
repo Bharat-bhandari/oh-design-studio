@@ -20,7 +20,7 @@ const HomeThoughts = () => {
                 <div className="text-textGray text-2xl">Header or subject</div>
               </div>
               <div className="text-sm leading-4">
-                Since Michael Ferdman founded firstborn in 1997, we've seen the
+                Since Michael Ferdman founded firstborn in 1997, weve seen the
                 digital landscape change dramatically. Lorem ipsum, dolor sit
                 amet consectetur adipisicing elit. Sint consequuntur,
                 consequatur vel sequi eligendi amet tempore autem placeat
@@ -42,7 +42,7 @@ const HomeThoughts = () => {
                 <div className="text-textGray text-2xl">Header or subject</div>
               </div>
               <div className="text-sm leading-4">
-                Since Michael Ferdman founded firstborn in 1997, we've seen the
+                Since Michael Ferdman founded firstborn in 1997, weve seen the
                 digital landscape change dramatically. Lorem ipsum, dolor sit
                 amet consectetur adipisicing elit. Sint consequuntur,
                 consequatur vel sequi eligendi amet tempore autem placeat
@@ -64,7 +64,7 @@ const HomeThoughts = () => {
                 <div className="text-textGray text-2xl">Header or subject</div>
               </div>
               <div className="text-sm leading-4">
-                Since Michael Ferdman founded firstborn in 1997, we've seen the
+                Since Michael Ferdman founded firstborn in 1997, weve seen the
                 digital landscape change dramatically. Lorem ipsum, dolor sit
                 amet consectetur adipisicing elit. Sint consequuntur,
                 consequatur vel sequi eligendi amet tempore autem placeat

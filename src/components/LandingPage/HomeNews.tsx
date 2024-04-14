@@ -21,7 +21,7 @@ const HomeNews = () => {
                 Branding & Design blog
               </div>
               <div className="text-sm leading-4">
-                Since Michael Ferdman founded firstborn in 1997, we've seen the
+                Since Michael Ferdman founded firstborn in 1997, weve seen the
                 digital landscape change dramatically.
               </div>
             </div>
@@ -36,7 +36,7 @@ const HomeNews = () => {
                 Branding & Design blog
               </div>
               <div className="text-sm leading-4">
-                Since Michael Ferdman founded firstborn in 1997, we've seen the
+                Since Michael Ferdman founded firstborn in 1997, weve seen the
                 digital landscape change dramatically.
               </div>
             </div>
@@ -51,7 +51,7 @@ const HomeNews = () => {
                 Branding & Design blog
               </div>
               <div className="text-sm leading-4">
-                Since Michael Ferdman founded firstborn in 1997, we've seen the
+                Since Michael Ferdman founded firstborn in 1997, weve seen the
                 digital landscape change dramatically.
               </div>
             </div>
