@@ -16,6 +16,7 @@ const config: Config = {
         yellowBg: "#fff500",
         textBlack: "#110c0c",
         textGray: "#959999",
+        bgGray: "#f2f3f2",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
