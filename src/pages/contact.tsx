@@ -1,56 +1,12 @@
-import ContactPage from "@/components/AboutUsPage/ContactPage";
-import { TransitionContext } from "@/context/TransitionContext";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React, { useContext, useRef } from "react";
+import MainContact from "@/components/ContactPage/MainContact";
+import React from "react";
 
-const Contact = () => {
-  const container = useRef<HTMLDivElement>(null);
-
-  const pathname = usePathname();
-
-  const { timeline } = useContext(TransitionContext);
-  const { previousRoute } = useContext(TransitionContext);
-  const { setPreviousRoute } = useContext(TransitionContext);
-
-  useGSAP(
-    () => {
-      gsap.set(".overlay", { xPercent: -101 });
-
-      const screenWidth = window.innerWidth;
-
-      gsap.fromTo(
-        container.current,
-        { x: screenWidth },
-        {
-          x: 0,
-          duration: 1,
-          ease: "power2.out",
-        }
-      );
-
-      setPreviousRoute(pathname);
-
-      timeline.add(
-        gsap.to(container.current, {
-          x: screenWidth,
-          duration: 0.5,
-          ease: "power2.in",
-        })
-      );
-    },
-    { scope: container }
-  );
-
+const contact = () => {
   return (
-    <div ref={container} className="h-screen flex">
-      <div className="bg-bgGray  panel h-[75vh] my-auto  w-[92vw] mx-[4vw] flex-shrink-0 ">
-        <ContactPage />
-      </div>
-    </div>
+    <>
+      <MainContact />
+    </>
   );
 };
 
-export default Contact;
+export default contact;

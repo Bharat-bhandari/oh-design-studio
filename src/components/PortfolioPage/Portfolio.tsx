@@ -19,7 +19,6 @@ const Portfolio = () => {
 
   const pathname = usePathname();
 
-  const hello = useRef();
   const { timeline } = useContext(TransitionContext);
 
   const { setPreviousRoute } = useContext(TransitionContext);
@@ -29,6 +28,7 @@ const Portfolio = () => {
       const sections: HTMLDivElement[] = gsap.utils.toArray(".panel");
 
       const amountToScroll = 100 * (sections.length - 1);
+      const scrollSpeed = sections.length * 1000;
 
       gsap.to(sections, {
         xPercent: -amountToScroll, // amount to scroll
@@ -40,9 +40,7 @@ const Portfolio = () => {
           start: "center center",
           scrub: 1,
           end: () => {
-            const mainContainer =
-              document.querySelector<HTMLElement>("#mainContainer");
-            return mainContainer ? `+=${mainContainer.offsetWidth}` : "+=0";
+            return `+=${scrollSpeed}`;
           },
           // markers: {
           //   startColor: "purple",
@@ -55,17 +53,27 @@ const Portfolio = () => {
 
       const screenWidth = window.innerWidth;
 
-      gsap.fromTo(
-        ".hello",
-        {
-          x: screenWidth,
-        },
-        {
-          x: 0,
-          duration: 1,
-          ease: "power2.out",
-        }
-      );
+      const tl = gsap.timeline();
+
+      const init = () => {
+        tl.fromTo(
+          container.current,
+          {
+            x: screenWidth,
+            autoAlpha: 0,
+          },
+          {
+            x: 0,
+            autoAlpha: 1,
+            duration: 1,
+            ease: "power2.out",
+          }
+        );
+      };
+
+      setTimeout(() => {
+        init();
+      }, 0.0001);
 
       setPreviousRoute(pathname);
 
@@ -84,7 +92,7 @@ const Portfolio = () => {
 
   return (
     <>
-      <div ref={container} id="mainContainer">
+      <div ref={container} id="mainContainer" className="invisible">
         <div className="flex h-screen hello ">
           <div className="panel h-[75vh] my-auto  w-[96vw] ml-[4vw] flex-shrink-0 ">
             <HomePortfolio />

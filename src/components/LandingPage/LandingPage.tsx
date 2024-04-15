@@ -36,8 +36,10 @@ const LandingPage = () => {
       const sections: HTMLDivElement[] = gsap.utils.toArray(".panel");
 
       const amountToScroll = 100 * (sections.length - 1);
+      const scrollSpeed = sections.length * 1000;
 
       // console.log(amountToScroll);
+      // console.log("hello", sections.length);
 
       gsap.to(sections, {
         xPercent: -amountToScroll, // amount to scroll
@@ -49,9 +51,7 @@ const LandingPage = () => {
           start: "center center",
           scrub: 1,
           end: () => {
-            const mainContainer =
-              document.querySelector<HTMLElement>("#mainContainer");
-            return mainContainer ? `+=${mainContainer.offsetWidth}` : "+=0";
+            return `+=${scrollSpeed}`;
           },
           // markers: {
           //   startColor: "purple",
@@ -70,35 +70,41 @@ const LandingPage = () => {
 
       const tl = gsap.timeline();
 
-      if (
-        previousRoute === "" ||
-        previousRoute === "/menu" ||
-        previousRoute === "/contact"
-      ) {
-        tl.fromTo(
-          container.current,
-          {
-            x: screenWidth,
-            autoAlpha: 0,
-          },
-          {
-            x: 0,
-            duration: 1,
-            ease: "power2.out",
-            autoAlpha: 1,
-          }
-        );
-      } else if (previousRoute === "/portfolio") {
-        tl.fromTo(
-          container.current,
-          {
-            x: -totalContentWidth,
-          },
-          {
-            x: 0,
-          }
-        );
-      }
+      const init = () => {
+        if (
+          previousRoute === "" ||
+          previousRoute === "/menu" ||
+          previousRoute === "/contact"
+        ) {
+          tl.fromTo(
+            container.current,
+            {
+              x: screenWidth,
+              autoAlpha: 0,
+            },
+            {
+              x: 0,
+              autoAlpha: 1,
+              duration: 1,
+              ease: "power2.out",
+            }
+          );
+        } else if (previousRoute === "/portfolio") {
+          tl.fromTo(
+            container.current,
+            {
+              x: -totalContentWidth,
+            },
+            {
+              x: 0,
+            }
+          );
+        }
+      };
+
+      setTimeout(() => {
+        init();
+      }, 0.0001);
 
       setPreviousRoute(pathname);
 
