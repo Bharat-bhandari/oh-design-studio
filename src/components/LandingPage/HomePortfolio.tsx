@@ -44,8 +44,6 @@ const HomePortfolio = () => {
             return "top";
           case bottomEdgeDist:
             return "bottom";
-          default:
-            return "";
         }
       };
 
@@ -68,28 +66,28 @@ const HomePortfolio = () => {
         const edge = closestEdge(x, y, this.clientWidth, this.clientHeight);
         const overlay = this.querySelector(".overlay");
 
+        console.log("edge", edge);
+
         switch (edge) {
           case "left":
             overlay.style.top = "0%";
             overlay.style.left = "-100%";
-            gsap.to(overlay, { duration: 0.5, left: "0%" });
+            gsap.to(overlay, { duration: 1, left: "0%" });
             break;
           case "right":
             overlay.style.top = "0%";
             overlay.style.left = "100%";
-            gsap.to(overlay, { duration: 0.5, left: 0 });
+            gsap.to(overlay, { duration: 1, left: "0%" });
             break;
           case "top":
             overlay.style.top = "-100%";
             overlay.style.left = "0%";
-            gsap.to(overlay, { duration: 0.5, top: "0%" });
+            gsap.to(overlay, { duration: 1, top: "0%" });
             break;
           case "bottom":
             overlay.style.top = "100%";
             overlay.style.left = "0%";
-            gsap.to(overlay, { duration: 0.5, top: "0%" });
-            break;
-          default:
+            gsap.to(overlay, { duration: 1, top: "0%" });
             break;
         }
       }
@@ -102,18 +100,16 @@ const HomePortfolio = () => {
 
         switch (edge) {
           case "left":
-            gsap.to(overlay, { duration: 0.5, left: "-100%" });
+            gsap.to(overlay, { duration: 1, left: "-100%" });
             break;
           case "right":
-            gsap.to(overlay, { duration: 0.5, left: "100%" });
+            gsap.to(overlay, { duration: 1, left: "100%" });
             break;
           case "top":
-            gsap.to(overlay, { duration: 0.5, top: "-100%" });
+            gsap.to(overlay, { duration: 1, top: "-100%" });
             break;
           case "bottom":
-            gsap.to(overlay, { duration: 0.5, top: "100%" });
-            break;
-          default:
+            gsap.to(overlay, { duration: 1, top: "100%" });
             break;
         }
       }
@@ -134,8 +130,8 @@ const HomePortfolio = () => {
       <h1 className="text-center font-roboto-condensed">
         Direction Aware Hover
       </h1>
-      <div className="container mx-auto cf">
-        <div className="boxes relative w-1/4 h-48 bg-yellow-400 m-2 float-left overflow-hidden cursor-pointer">
+      <div className="container mx-auto pl-[20rem] pt-10 cf">
+        <div className="boxes relative w-[30rem] h-[30rem] bg-yellow-400 overflow-hidden m-2 float-left cursor-pointer">
           <img
             className="da-image object-cover w-full h-full"
             src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/24345/da_image1.jpg"
