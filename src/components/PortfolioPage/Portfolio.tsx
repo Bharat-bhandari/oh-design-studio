@@ -97,9 +97,9 @@ const Portfolio = () => {
           <div className="panel h-[75vh] my-auto  w-[96vw] ml-[4vw] flex-shrink-0 ">
             <HomePortfolio />
           </div>
-          {/* <div className=" panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
+          <div className=" panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
             <HomePortfolio />
-          </div> */}
+          </div>
 
           <div className="panel h-[75vh] my-auto w-[96vw] pr-[4vw]   flex-shrink-0 ">
             <HomeFooter />

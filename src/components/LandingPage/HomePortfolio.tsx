@@ -1,30 +1,13 @@
-// import React from "react";
-
-// const HomePortfolio = () => {
-//   return (
-//     <div className="grid grid-cols-3 h-full">
-//       <div className="bg-blue-400">Hello</div>
-//       <div className="bg-yellow-400">Hello</div>
-//       <div className="bg-red-400">Hello</div>
-//       <div className="bg-green-400">Hello</div>
-//       <div className="bg-pink-400">Hello</div>
-//       <div className="bg-purple-400">Hello</div>
-//     </div>
-//   );
-// };
-
-// export default HomePortfolio;
-
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 const HomePortfolio = () => {
-  const container = useRef();
+  const container = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      const closestEdge = (x, y, w, h) => {
+      const closestEdge = (x: number, y: number, w: number, h: number) => {
         const topEdgeDist = distMetric(x, y, w / 2, 0);
         const bottomEdgeDist = distMetric(x, y, w / 2, h);
         const leftEdgeDist = distMetric(x, y, 0, h / 2);
@@ -44,106 +27,190 @@ const HomePortfolio = () => {
             return "top";
           case bottomEdgeDist:
             return "bottom";
+          default:
+            return "";
         }
       };
 
-      const distMetric = (x, y, x2, y2) => {
+      const distMetric = (x: number, y: number, x2: number, y2: number) => {
         const xDiff = x - x2;
         const yDiff = y - y2;
         return xDiff * xDiff + yDiff * yDiff;
       };
 
-      const boxes = document.querySelectorAll(".boxes");
+      const boxes = document.querySelectorAll<HTMLDivElement>(".boxes");
 
       boxes.forEach((box) => {
         box.addEventListener("mouseenter", handleMouseEnter);
         box.addEventListener("mouseleave", handleMouseLeave);
       });
-
-      function handleMouseEnter(e) {
+      function handleMouseEnter(this: HTMLDivElement, e: MouseEvent) {
         const x = e.pageX - this.offsetLeft;
         const y = e.pageY - this.offsetTop;
         const edge = closestEdge(x, y, this.clientWidth, this.clientHeight);
-        const overlay = this.querySelector(".overlay");
+        const overlay = this.querySelector<HTMLDivElement>(".overlay");
+        const overlayText = this.querySelector<HTMLDivElement>(".textOverlay");
 
         console.log("edge", edge);
+
+        if (!overlay) return; // Check if overlay is null
+        if (!overlayText) return; // Check if overlay is null
 
         switch (edge) {
           case "left":
             overlay.style.top = "0%";
             overlay.style.left = "-100%";
-            gsap.to(overlay, { duration: 1, left: "0%" });
+            overlayText.style.top = "0%";
+            overlayText.style.left = "-100%";
+
+            gsap.to(overlay, { duration: 0.25, left: "0%" });
+            gsap.to(overlayText, { duration: 0.25, left: "0%" });
+
             break;
           case "right":
             overlay.style.top = "0%";
             overlay.style.left = "100%";
-            gsap.to(overlay, { duration: 1, left: "0%" });
+            overlayText.style.top = "0%";
+            overlayText.style.left = "100%";
+            gsap.to(overlay, { duration: 0.25, left: "0%" });
+            gsap.to(overlayText, { duration: 0.25, left: "0%" });
             break;
           case "top":
             overlay.style.top = "-100%";
             overlay.style.left = "0%";
-            gsap.to(overlay, { duration: 1, top: "0%" });
+            overlayText.style.top = "-100%";
+            overlayText.style.left = "0%";
+            gsap.to(overlay, { duration: 0.25, top: "0%" });
+            gsap.to(overlayText, { duration: 0.25, top: "0%" });
             break;
           case "bottom":
             overlay.style.top = "100%";
             overlay.style.left = "0%";
-            gsap.to(overlay, { duration: 1, top: "0%" });
+            overlayText.style.top = "100%";
+            overlayText.style.left = "0%";
+            gsap.to(overlay, { duration: 0.25, top: "0%" });
+            gsap.to(overlayText, { duration: 0.25, top: "0%" });
+            break;
+          default:
             break;
         }
       }
 
-      function handleMouseLeave(e) {
+      function handleMouseLeave(this: HTMLDivElement, e: MouseEvent) {
         const x = e.pageX - this.offsetLeft;
         const y = e.pageY - this.offsetTop;
         const edge = closestEdge(x, y, this.clientWidth, this.clientHeight);
-        const overlay = this.querySelector(".overlay");
+        const overlay = this.querySelector<HTMLDivElement>(".overlay");
+        const overlayText = this.querySelector<HTMLDivElement>(".textOverlay");
+
+        if (!overlay) return; // Check if overlay is null
+        if (!overlayText) return; // Check if overlay is null
 
         switch (edge) {
           case "left":
-            gsap.to(overlay, { duration: 1, left: "-100%" });
+            // gsap.to(overlay, { duration: 0.25, left: "-100%" });
+            gsap.set(overlay, { left: "-100%" });
+            gsap.to(overlayText, {
+              duration: 0.25,
+              left: "100%",
+              ease: "power4.in",
+            });
             break;
           case "right":
-            gsap.to(overlay, { duration: 1, left: "100%" });
+            // gsap.to(overlay, { duration: 0.25, left: "100%" });
+            gsap.set(overlay, { left: "100%" });
+            gsap.to(overlayText, {
+              duration: 0.25,
+              left: "-100%",
+              ease: "power4.in",
+            });
             break;
           case "top":
-            gsap.to(overlay, { duration: 1, top: "-100%" });
+            // gsap.to(overlay, { duration: 0.25, top: "-100%" });
+            gsap.set(overlay, { top: "-100%" });
+            gsap.to(overlayText, {
+              duration: 0.25,
+              top: "100%",
+              ease: "power4.in",
+            });
             break;
           case "bottom":
-            gsap.to(overlay, { duration: 1, top: "100%" });
+            // gsap.to(overlay, { duration: 0.25, top: "100%" });
+            gsap.set(overlay, { top: "100%" });
+            gsap.to(overlayText, {
+              duration: 0.25,
+              top: "-100%",
+              ease: "power4.in",
+            });
+            break;
+          default:
             break;
         }
       }
-
-      // return () => {
-      //   // Cleanup event listeners when component unmounts
-      //   boxes.forEach((box) => {
-      //     box.removeEventListener("mouseenter", handleMouseEnter);
-      //     box.removeEventListener("mouseleave", handleMouseLeave);
-      //   });
-      // };
+      return () => {
+        // Cleanup event listeners when component unmounts
+        boxes.forEach((box) => {
+          box.removeEventListener("mouseenter", handleMouseEnter);
+          box.removeEventListener("mouseleave", handleMouseLeave);
+        });
+      };
     },
     { scope: container }
   );
 
   return (
-    <div ref={container}>
-      <h1 className="text-center font-roboto-condensed">
-        Direction Aware Hover
-      </h1>
-      <div className="container mx-auto pl-[20rem] pt-10 cf">
-        <div className="boxes relative w-[30rem] h-[30rem] bg-yellow-400 overflow-hidden m-2 float-left cursor-pointer">
-          <img
-            className="da-image object-cover w-full h-full"
-            src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/24345/da_image1.jpg"
-            alt=""
-          />
-          <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10">
-            {" "}
-            Hello
-          </div>
+    <div ref={container} className="grid grid-cols-3 h-full w-full">
+      <div className="bg-blue-400 boxes relative overflow-hidden cursor-pointer">
+        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
+        <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
+          Hello
         </div>
-        {/* Repeat for other boxes */}
       </div>
+      <div className="bg-yellow-400 boxes relative overflow-hidden cursor-pointer">
+        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
+        <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
+          Hello
+        </div>
+      </div>
+      <div className="bg-red-400 boxes relative overflow-hidden cursor-pointer">
+        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
+        <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
+          Hello
+        </div>
+      </div>
+      <div className="bg-green-400 boxes relative overflow-hidden cursor-pointer">
+        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
+        <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
+          Hello
+        </div>
+      </div>
+      <div className="bg-pink-400 boxes relative overflow-hidden cursor-pointer">
+        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
+        <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
+          Hello
+        </div>
+      </div>
+      <div className="bg-purple-400 boxes relative overflow-hidden cursor-pointer">
+        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
+        <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
+          Hello
+        </div>
+      </div>
+      {/* <div className="bg-yellow-400">Hello</div>
+      <div className="bg-red-400">Hello</div>
+      <div className="bg-green-400">Hello</div>
+      <div className="bg-pink-400">Hello</div>
+      <div className="bg-purple-400">Hello</div> */}
+      {/* <div className="boxes relative h-fit w-fit bg-yellow-400 overflow-hidden float-left cursor-pointer">
+        <img
+          className="object-cover w-full h-full"
+          src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/24345/da_image1.jpg"
+          alt=""
+        />
+        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10">
+          Hello
+        </div>
+      </div> */}
     </div>
   );
 };
