@@ -6,6 +6,8 @@
 
 body {
   overflow-x: hidden;
+  cursor: default;
+  scroll-behavior: auto !important;
   padding: 0;
   margin: 0;
   /* font-family: -apple-system, BlinkMacSystemFont, sans-serif; */

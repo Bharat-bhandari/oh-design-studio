@@ -45,8 +45,8 @@ const HomePortfolio = () => {
         box.addEventListener("mouseleave", handleMouseLeave);
       });
       function handleMouseEnter(this: HTMLDivElement, e: MouseEvent) {
-        const x = e.pageX - this.offsetLeft;
-        const y = e.pageY - this.offsetTop;
+        const x = e.clientX - this.offsetLeft;
+        const y = e.clientY - this.offsetTop;
         const edge = closestEdge(x, y, this.clientWidth, this.clientHeight);
         const overlay = this.querySelector<HTMLDivElement>(".overlay");
         const overlayText = this.querySelector<HTMLDivElement>(".textOverlay");
@@ -97,8 +97,8 @@ const HomePortfolio = () => {
       }
 
       function handleMouseLeave(this: HTMLDivElement, e: MouseEvent) {
-        const x = e.pageX - this.offsetLeft;
-        const y = e.pageY - this.offsetTop;
+        const x = e.clientX - this.offsetLeft;
+        const y = e.clientY - this.offsetTop;
         const edge = closestEdge(x, y, this.clientWidth, this.clientHeight);
         const overlay = this.querySelector<HTMLDivElement>(".overlay");
         const overlayText = this.querySelector<HTMLDivElement>(".textOverlay");
@@ -144,6 +144,7 @@ const HomePortfolio = () => {
             });
             break;
           default:
+            gsap.set(overlay, { top: "100%" });
             break;
         }
       }
@@ -196,21 +197,6 @@ const HomePortfolio = () => {
           Hello
         </div>
       </div>
-      {/* <div className="bg-yellow-400">Hello</div>
-      <div className="bg-red-400">Hello</div>
-      <div className="bg-green-400">Hello</div>
-      <div className="bg-pink-400">Hello</div>
-      <div className="bg-purple-400">Hello</div> */}
-      {/* <div className="boxes relative h-fit w-fit bg-yellow-400 overflow-hidden float-left cursor-pointer">
-        <img
-          className="object-cover w-full h-full"
-          src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/24345/da_image1.jpg"
-          alt=""
-        />
-        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10">
-          Hello
-        </div>
-      </div> */}
     </div>
   );
 };

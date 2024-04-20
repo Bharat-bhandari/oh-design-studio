@@ -87,10 +87,10 @@ export default function CarouselBlog() {
       orientation="vertical"
       className="w-[87vw] h-fit"
     >
-      <CarouselContent className="h-[48vh]">
+      <CarouselContent className="h-[48vh] ">
         {chunks.map((chunk, index) => (
           <CarouselItem key={index}>
-            <div className="grid grid-cols-3 mx-[5.5vw] h-full  ">
+            <div className="grid grid-cols-3 mx-[5.5vw] h-full ">
               {chunk.map((blog, blogIndex) => (
                 <div
                   key={blogIndex}
@@ -110,7 +110,7 @@ export default function CarouselBlog() {
                       </div>
                     </div>
 
-                    <Image src={linkBtn} alt="link" />
+                    <Image src={linkBtn} alt="link" className="mb-6" />
                   </div>
                 </div>
               ))}

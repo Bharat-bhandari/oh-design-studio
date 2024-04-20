@@ -1,11 +1,16 @@
 import * as React from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
+import { IoIosArrowRoundUp, IoIosArrowRoundDown } from "react-icons/io";
+
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { FaArrowDown } from "react-icons/fa";
+import { FaArrowDown19 } from "react-icons/fa6";
+import { GoArrowDown, GoArrowUp } from "react-icons/go";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -206,15 +211,15 @@ const CarouselPrevious = React.forwardRef<
       className={cn(
         "absolute  h-8 w-8 rounded-full",
         orientation === "horizontal"
-          ? "-left-12 top-1/2 -translate-y-1/2"
-          : "bottom-12 right-0 rotate-90",
+          ? "-left-12 top-1/2 -translate-y-1/2 "
+          : "bottom-12 right-0",
         className
       )}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeftIcon className="h-4 w-4" />
+      <GoArrowUp className="h-6 w-6 cursor-pointer" />
       <span className="sr-only">Previous slide</span>
     </Button>
   );
@@ -243,7 +248,7 @@ const CarouselNext = React.forwardRef<
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRightIcon className="h-4 w-4" />
+      <GoArrowDown className="h-6 w-6 cursor-pointer" />
       <span className="sr-only">Next slide</span>
     </Button>
   );

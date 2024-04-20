@@ -4,6 +4,8 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { usePathname } from "next/navigation";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { Draggable } from "gsap/dist/Draggable";
+
 import { useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { TransitionContext } from "@/context/TransitionContext";
@@ -19,7 +21,7 @@ import HomeClients from "./HomeClients";
 import HomeNews from "./HomeNews";
 import HomeThoughts from "./HomeThoughts";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
 const LandingPage = () => {
   const container = useRef<HTMLDivElement>(null);
@@ -33,34 +35,65 @@ const LandingPage = () => {
 
   useGSAP(
     () => {
+      // Scrolling
       const sections: HTMLDivElement[] = gsap.utils.toArray(".panel");
 
-      const amountToScroll = 100 * (sections.length - 1);
-      const scrollSpeed = sections.length * 1000;
+      let maxWidth = 0;
 
-      // console.log(amountToScroll);
-      // console.log("hello", sections.length);
+      const getMaxWidth = () => {
+        maxWidth = 0;
+        sections.forEach((section) => {
+          maxWidth += section.offsetWidth;
+        });
+      };
 
-      gsap.to(sections, {
-        xPercent: -amountToScroll, // amount to scroll
+      getMaxWidth();
+      ScrollTrigger.addEventListener("refreshInit", getMaxWidth);
+
+      let scrollTween = gsap.to(sections, {
+        x: () => `-${maxWidth - window.innerWidth}`,
         ease: "none",
-        scrollTrigger: {
-          trigger: container.current,
-          pin: true,
-          snap: 1 / (sections.length - 1),
-          start: "center center",
-          scrub: 1,
-          end: () => {
-            return `+=${scrollSpeed}`;
-          },
-          // markers: {
-          //   startColor: "purple",
-          //   endColor: "fuchsia",
-          //   fontSize: "2rem",
-          //   indent: 200,
-          // },
+      });
+
+      let horizontalScroll = ScrollTrigger.create({
+        animation: scrollTween,
+        trigger: container.current,
+        pin: true,
+        // snap: 1 / (sections.length - 1),
+        start: "center center",
+        scrub: 1,
+        end: () => `+=${maxWidth}`,
+        invalidateOnRefresh: true,
+        markers: {
+          startColor: "purple",
+          endColor: "fuchsia",
+          fontSize: "2rem",
+          indent: 200,
         },
       });
+
+      // Draggable Part
+
+      var dragRatio = maxWidth / (maxWidth - window.innerWidth);
+
+      console.log("ratio", dragRatio);
+
+      Draggable.create(".drag-proxy", {
+        trigger: container.current,
+        type: "x",
+        allowContextMenu: true,
+        onPress() {
+          this.startScroll = horizontalScroll.scroll();
+        },
+        onDrag() {
+          horizontalScroll.scroll(
+            this.startScroll - (this.x - this.startX) * dragRatio
+          );
+        },
+      });
+
+      // Draggable Part
+      // Scrolling
 
       // Your other GSAP animations
 
@@ -240,9 +273,10 @@ const LandingPage = () => {
           <div className=" panel h-[75vh] my-auto w-screen  flex-shrink-0 ">
             <HomeThoughts />
           </div>
-          <div className="panel h-[75vh] my-auto w-[96vw] pr-[4vw]   flex-shrink-0 ">
+          <div className="panel h-[75vh] my-auto w-[96vw] pr-[4vw]   flex-shrink-0  cursor-default">
             <HomeFooter />
           </div>
+          <div className="drag-proxy invisible absolute"></div>
         </div>
       </div>
     </>
