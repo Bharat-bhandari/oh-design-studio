@@ -20,11 +20,14 @@ import HomePortfolio from "./HomePortfolio";
 import HomeClients from "./HomeClients";
 import HomeNews from "./HomeNews";
 import HomeThoughts from "./HomeThoughts";
+import Nav from "./Nav";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
 const LandingPage = () => {
   const container = useRef<HTMLDivElement>(null);
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const pathname = usePathname();
 
@@ -59,17 +62,17 @@ const LandingPage = () => {
         animation: scrollTween,
         trigger: container.current,
         pin: true,
-        // snap: 1 / (sections.length - 1),
+        snap: 1 / (sections.length - 1),
         start: "center center",
         scrub: 1,
         end: () => `+=${maxWidth}`,
         invalidateOnRefresh: true,
-        markers: {
-          startColor: "purple",
-          endColor: "fuchsia",
-          fontSize: "2rem",
-          indent: 200,
-        },
+        // markers: {
+        //   startColor: "purple",
+        //   endColor: "fuchsia",
+        //   fontSize: "2rem",
+        //   indent: 200,
+        // },
       });
 
       // Draggable Part
@@ -104,11 +107,54 @@ const LandingPage = () => {
       const tl = gsap.timeline();
 
       const init = () => {
-        if (
-          previousRoute === "" ||
-          previousRoute === "/menu" ||
-          previousRoute === "/contact"
-        ) {
+        if (previousRoute === "") {
+          tl.fromTo(
+            ".loading",
+            {
+              x: -screenWidth,
+              autoAlpha: 0,
+            },
+            {
+              x: screenWidth,
+              autoAlpha: 1,
+              duration: 1.2,
+            }
+          )
+            .fromTo(
+              ".textOH",
+              {
+                autoAlpha: 0,
+              },
+              {
+                autoAlpha: 1,
+                duration: 0.2,
+              }
+            )
+            .fromTo(
+              ".textHello",
+              { y: 0 },
+              {
+                y: -40,
+                duration: 0.5,
+                delay: 1.2,
+                onComplete: () => setIsLoading(false),
+              }
+            )
+            .fromTo(
+              container.current,
+              {
+                x: screenWidth,
+                autoAlpha: 0,
+              },
+              {
+                x: 0,
+                autoAlpha: 1,
+                duration: 1,
+                ease: "power2.out",
+              }
+            );
+        } else if (previousRoute === "/menu" || previousRoute === "/contact") {
+          setIsLoading(false);
           tl.fromTo(
             container.current,
             {
@@ -157,126 +203,146 @@ const LandingPage = () => {
 
   return (
     <>
-      <div ref={container} id="mainContainer" className="invisible">
-        <div className="flex h-screen  ">
-          <div className=" panel h-[75vh] my-auto  w-[96vw] pl-[4vw] flex-shrink-0 ">
-            <div
-              style={{
-                // use the src property of the image object
-                backgroundImage: `url(${CImage1.src})`,
-                // other styles
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                width: "96vw",
-                height: "75vh",
-                display: "flex",
-                // alignItems: "center",
-                // justifyContent: "center",
-              }}
-            >
-              <div className="flex justify-between h-full w-full items-end px-[6.5vw] text-white">
-                <div className="pb-[6.5vh]">
-                  <div className=" text-sm font-semibold">CLIENT NAME</div>
-                  <div className=" text-4xl font-semibold ">WE CREATE</div>
-                  <div className=" text-4xl font-semibold mb-[1.5vh] ">
-                    GAME CHANGING BRANDS
-                  </div>
-
-                  <div className="text-sm text-[#fff500] font-semibold">
-                    GO TO PROJECT
-                  </div>
-                </div>
-                <div className="pb-[6.5vh]">heloo</div>
+      {isLoading && (
+        <>
+          <div className=" absolute top-0 left-0 h-screen w-screen flex justify-center items-center z-50 loading invisible">
+            <div className="border-[2px] border-solid w-screen border-black"></div>
+          </div>
+          <div className=" absolute top-0 left-0 h-screen w-screen flex justify-center items-center z-50 ">
+            <div className="text-4xl invisible textOH font-semibold overflow-hidden w-fit h-10 gap-5 flex  ">
+              OH!
+              <div className=" italic font-semibold textHello ">
+                <div>Hello</div>
+                <div>Design</div>
               </div>
             </div>
           </div>
-          <div className="  panel h-[75vh] my-auto w-screen flex-shrink-0 ">
-            <div
-              style={{
-                // use the src property of the image object
-                backgroundImage: `url(${CImage2.src})`,
-                // other styles
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                width: "100%",
-                height: "75vh",
-                display: "flex",
-                // alignItems: "center",
-                // justifyContent: "center",
-              }}
-            >
-              <div className="flex justify-between h-full w-full items-end px-[6.5vw] text-white">
-                <div className="pb-[6.5vh]">
-                  <div className=" text-sm font-semibold">CLIENT NAME</div>
-                  <div className=" text-4xl font-semibold ">WE CREATE</div>
-                  <div className=" text-4xl font-semibold mb-[1.5vh] ">
-                    GAME CHANGING BRANDS
-                  </div>
+        </>
+      )}
+      <div>
+        <div>{!isLoading && <Nav />}</div>
 
-                  <div className="text-sm text-[#fff500] font-semibold">
-                    GO TO PROJECT
+        <div ref={container} id="mainContainer" className="invisible">
+          <div className="flex h-screen cursor-default ">
+            <div className=" panel h-[75vh] my-auto  w-[96vw] pl-[4vw] flex-shrink-0 ">
+              <div
+                style={{
+                  // use the src property of the image object
+                  backgroundImage: `url(${CImage1.src})`,
+                  // other styles
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  width: "96vw",
+                  height: "75vh",
+                  display: "flex",
+                  // alignItems: "center",
+                  // justifyContent: "center",
+                }}
+              >
+                <div className="flex justify-between h-full w-full items-end px-[6.5vw] text-white">
+                  <div className="pb-[6.5vh]">
+                    <div className=" text-sm font-semibold">CLIENT NAME</div>
+                    <div className=" text-4xl font-semibold ">WE CREATE</div>
+                    <div className=" text-4xl font-semibold mb-[1.5vh] ">
+                      GAME CHANGING BRANDS
+                    </div>
+
+                    <div className="text-sm text-[#fff500] font-semibold">
+                      GO TO PROJECT
+                    </div>
                   </div>
+                  <div className="pb-[6.5vh]">heloo</div>
                 </div>
-                <div className="pb-[6.5vh]">heloo</div>
               </div>
             </div>
-          </div>
-          <div className="  panel h-[75vh] my-auto w-screen flex-shrink-0 ">
-            <div
-              style={{
-                // use the src property of the image object
-                backgroundImage: `url(${CImage3.src})`,
-                // other styles
-                backgroundPosition: "center",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                width: "100%",
-                height: "75vh",
-                display: "flex",
-                // alignItems: "center",
-                // justifyContent: "center",
-              }}
-            >
-              <div className="flex justify-between h-full w-full items-end px-[6.5vw] text-white">
-                <div className="pb-[6.5vh]">
-                  <div className=" text-sm font-semibold">CLIENT NAME</div>
-                  <div className=" text-4xl font-semibold ">WE CREATE</div>
-                  <div className=" text-4xl font-semibold mb-[1.5vh] ">
-                    GAME CHANGING BRANDS
-                  </div>
+            <div className="  panel h-[75vh] my-auto w-screen flex-shrink-0 ">
+              <div
+                style={{
+                  // use the src property of the image object
+                  backgroundImage: `url(${CImage2.src})`,
+                  // other styles
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  width: "100%",
+                  height: "75vh",
+                  display: "flex",
+                  // alignItems: "center",
+                  // justifyContent: "center",
+                }}
+              >
+                <div className="flex justify-between h-full w-full items-end px-[6.5vw] text-white">
+                  <div className="pb-[6.5vh]">
+                    <div className=" text-sm font-semibold">CLIENT NAME</div>
+                    <div className=" text-4xl font-semibold ">WE CREATE</div>
+                    <div className=" text-4xl font-semibold mb-[1.5vh] ">
+                      GAME CHANGING BRANDS
+                    </div>
 
-                  <div className="text-sm text-[#fff500] font-semibold">
-                    GO TO PROJECT
+                    <div className="text-sm text-[#fff500] font-semibold">
+                      GO TO PROJECT
+                    </div>
                   </div>
+                  <div className="pb-[6.5vh]">heloo</div>
                 </div>
-                <div className="pb-[6.5vh]">heloo</div>
               </div>
             </div>
+            <div className="  panel h-[75vh] my-auto w-screen flex-shrink-0 ">
+              <div
+                style={{
+                  // use the src property of the image object
+                  backgroundImage: `url(${CImage3.src})`,
+                  // other styles
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  width: "100%",
+                  height: "75vh",
+                  display: "flex",
+                  // alignItems: "center",
+                  // justifyContent: "center",
+                }}
+              >
+                <div className="flex justify-between h-full w-full items-end px-[6.5vw] text-white">
+                  <div className="pb-[6.5vh]">
+                    <div className=" text-sm font-semibold">CLIENT NAME</div>
+                    <div className=" text-4xl font-semibold ">WE CREATE</div>
+                    <div className=" text-4xl font-semibold mb-[1.5vh] ">
+                      GAME CHANGING BRANDS
+                    </div>
+
+                    <div className="text-sm text-[#fff500] font-semibold">
+                      GO TO PROJECT
+                    </div>
+                  </div>
+                  <div className="pb-[6.5vh]">heloo</div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-yellowBg panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
+              <HomeAboutUs />
+            </div>
+            <div className="bg-yellowBg panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
+              <HomeAboutUs2 />
+            </div>
+            <div className=" panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
+              <HomePortfolio />
+            </div>
+            <div className=" panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
+              <HomeClients />
+            </div>
+            <div className=" panel h-[75vh] my-auto w-screen  flex-shrink-0 ">
+              <HomeNews />
+            </div>
+            <div className=" panel h-[75vh] my-auto w-screen  flex-shrink-0 ">
+              <HomeThoughts />
+            </div>
+            <div className="panel h-[75vh] my-auto w-[96vw] pr-[4vw]   flex-shrink-0  cursor-default">
+              <HomeFooter />
+            </div>
+            <div className="drag-proxy invisible absolute"></div>
           </div>
-          <div className="bg-yellowBg panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
-            <HomeAboutUs />
-          </div>
-          <div className="bg-yellowBg panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
-            <HomeAboutUs2 />
-          </div>
-          <div className=" panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
-            <HomePortfolio />
-          </div>
-          <div className=" panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
-            <HomeClients />
-          </div>
-          <div className=" panel h-[75vh] my-auto w-screen  flex-shrink-0 ">
-            <HomeNews />
-          </div>
-          <div className=" panel h-[75vh] my-auto w-screen  flex-shrink-0 ">
-            <HomeThoughts />
-          </div>
-          <div className="panel h-[75vh] my-auto w-[96vw] pr-[4vw]   flex-shrink-0  cursor-default">
-            <HomeFooter />
-          </div>
-          <div className="drag-proxy invisible absolute"></div>
         </div>
       </div>
     </>
