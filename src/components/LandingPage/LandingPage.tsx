@@ -41,6 +41,8 @@ const LandingPage = () => {
       // Scrolling
       const sections: HTMLDivElement[] = gsap.utils.toArray(".panel");
 
+      const amountToScroll = 100 * (sections.length - 1);
+
       let maxWidth = 0;
 
       const getMaxWidth = () => {
@@ -54,7 +56,9 @@ const LandingPage = () => {
       ScrollTrigger.addEventListener("refreshInit", getMaxWidth);
 
       let scrollTween = gsap.to(sections, {
-        x: () => `-${maxWidth - window.innerWidth}`,
+        // xPercent: () => `-${maxWidth - window.innerWidth}`,
+        xPercent: -amountToScroll, // amount to scroll
+
         ease: "none",
       });
 
@@ -111,11 +115,11 @@ const LandingPage = () => {
           tl.fromTo(
             ".loading",
             {
-              x: -screenWidth,
+              xPercent: -100,
               autoAlpha: 0,
             },
             {
-              x: screenWidth,
+              xPercent: 100,
               autoAlpha: 1,
               duration: 1.2,
             }
@@ -127,7 +131,7 @@ const LandingPage = () => {
               },
               {
                 autoAlpha: 1,
-                duration: 0.2,
+                // duration: 0.2,
               }
             )
             .fromTo(
@@ -136,8 +140,12 @@ const LandingPage = () => {
               {
                 y: -40,
                 duration: 0.5,
-                delay: 1.2,
-                onComplete: () => setIsLoading(false),
+                delay: 0.5,
+                onComplete: () => {
+                  setTimeout(() => {
+                    setIsLoading(false);
+                  }, 800);
+                },
               }
             )
             .fromTo(
@@ -150,6 +158,7 @@ const LandingPage = () => {
                 x: 0,
                 autoAlpha: 1,
                 duration: 1,
+                delay: 1,
                 ease: "power2.out",
               }
             );
@@ -204,7 +213,7 @@ const LandingPage = () => {
   return (
     <>
       {isLoading && (
-        <>
+        <div className="relative h-screen w-screen">
           <div className=" absolute top-0 left-0 h-screen w-screen flex justify-center items-center z-50 loading invisible">
             <div className="border-[2px] border-solid w-screen border-black"></div>
           </div>
@@ -217,7 +226,7 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-        </>
+        </div>
       )}
       <div>
         <div>{!isLoading && <Nav />}</div>

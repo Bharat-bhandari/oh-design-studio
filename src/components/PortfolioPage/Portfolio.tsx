@@ -36,7 +36,7 @@ const Portfolio = () => {
         scrollTrigger: {
           trigger: container.current,
           pin: true,
-          // snap: 1 / (sections.length - 1),
+          snap: 1 / (sections.length - 1),
           start: "center center",
           scrub: 1,
           end: () => {
