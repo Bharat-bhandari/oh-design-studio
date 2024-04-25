@@ -161,6 +161,14 @@ const LandingPage = () => {
                 delay: 1,
                 ease: "power2.out",
               }
+            )
+            .fromTo(
+              ".brandText",
+              {
+                y: 30,
+                opacity: 0,
+              },
+              { y: 0, opacity: 1 }
             );
         } else if (previousRoute === "/menu" || previousRoute === "/contact") {
           setIsLoading(false);
@@ -213,14 +221,14 @@ const LandingPage = () => {
   return (
     <>
       {isLoading && (
-        <div className="relative h-screen w-screen">
-          <div className=" absolute top-0 left-0 h-screen w-screen flex justify-center items-center z-50 loading invisible">
+        <div>
+          <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center z-50 loading invisible">
             <div className="border-[2px] border-solid w-screen border-black"></div>
           </div>
-          <div className=" absolute top-0 left-0 h-screen w-screen flex justify-center items-center z-50 ">
-            <div className="text-4xl invisible textOH font-semibold overflow-hidden w-fit h-10 gap-5 flex  ">
+          <div className="fixed top-0 left-0 right-0 bottom-0 flex justify-center items-center z-50">
+            <div className="text-4xl invisible textOH font-semibold overflow-hidden w-fit h-10 gap-5 flex">
               OH!
-              <div className=" italic font-semibold textHello ">
+              <div className="italic font-semibold textHello">
                 <div>Hello</div>
                 <div>Design</div>
               </div>
@@ -250,7 +258,7 @@ const LandingPage = () => {
                 }}
               >
                 <div className="flex justify-between h-full w-full items-end px-[6.5vw] text-white">
-                  <div className="pb-[6.5vh]">
+                  <div className="pb-[6.5vh] brandText">
                     <div className=" text-sm font-semibold">CLIENT NAME</div>
                     <div className=" text-4xl font-semibold ">WE CREATE</div>
                     <div className=" text-4xl font-semibold mb-[1.5vh] ">
