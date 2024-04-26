@@ -64,6 +64,7 @@ const HomeAboutUs2: React.FC = () => {
   const headerTextRef = useRef<Array<null | HTMLDivElement>>(
     Array(data.length).fill(null)
   );
+
   const linesRef = useRef<Array<HTMLDivElement | null>>(
     Array(data.length).fill(null)
   );
@@ -98,7 +99,7 @@ const HomeAboutUs2: React.FC = () => {
       ease: "power2.out",
     });
 
-    gsap.to(headerTextRef.current[index], { opacity: 0.6 });
+    gsap.to(headerTextRef.current[index], { opacity: 0 });
   };
 
   return (
@@ -114,19 +115,25 @@ const HomeAboutUs2: React.FC = () => {
             <div className="flex gap-2 items-center h-fit">
               <div
                 // ref={headerTextRef.current[index]}
-                ref={(el) => (headerTextRef.current[index] = el)}
-                className="text-xl font-medium opacity-60"
+                ref={(el) => {
+                  headerTextRef.current[index] = el;
+                }}
+                className="text-xl font-medium opacity-0"
               >
                 {item.headerText}
               </div>
               <div className="text-sm">0{item.id}</div>
               <div
-                ref={(el) => (linesRef.current[index] = el)}
+                ref={(el) => {
+                  linesRef.current[index] = el;
+                }}
                 className="bg-textGray h-[2px]"
               ></div>
             </div>
             <div
-              ref={(el) => (headingsRef.current[index] = el)}
+              ref={(el) => {
+                headingsRef.current[index] = el;
+              }}
               className="text-5xl font-semibold opacity-60 cursor-pointer"
             >
               {item.heading}

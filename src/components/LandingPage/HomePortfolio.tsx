@@ -108,7 +108,6 @@ const HomePortfolio = () => {
 
         switch (edge) {
           case "left":
-            // gsap.to(overlay, { duration: 0.25, left: "-100%" });
             gsap.set(overlay, { left: "-100%" });
             gsap.to(overlayText, {
               duration: 0.25,
@@ -117,7 +116,6 @@ const HomePortfolio = () => {
             });
             break;
           case "right":
-            // gsap.to(overlay, { duration: 0.25, left: "100%" });
             gsap.set(overlay, { left: "100%" });
             gsap.to(overlayText, {
               duration: 0.25,
@@ -126,7 +124,6 @@ const HomePortfolio = () => {
             });
             break;
           case "top":
-            // gsap.to(overlay, { duration: 0.25, top: "-100%" });
             gsap.set(overlay, { top: "-100%" });
             gsap.to(overlayText, {
               duration: 0.25,
@@ -135,7 +132,6 @@ const HomePortfolio = () => {
             });
             break;
           case "bottom":
-            // gsap.to(overlay, { duration: 0.25, top: "100%" });
             gsap.set(overlay, { top: "100%" });
             gsap.to(overlayText, {
               duration: 0.25,
@@ -147,6 +143,11 @@ const HomePortfolio = () => {
             gsap.set(overlay, { top: "100%" });
             break;
         }
+
+        // Delay before hiding the overlay
+        setTimeout(() => {
+          gsap.set(overlay, { top: "100%" });
+        }, 250); // Adjust the delay time as needed
       }
       return () => {
         // Cleanup event listeners when component unmounts

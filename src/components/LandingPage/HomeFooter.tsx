@@ -1,17 +1,61 @@
 import React from "react";
 import Image from "next/image";
 import linkBtn from "@/assets/images/linkBtn.png";
-import { FaBehance, FaFacebook } from "react-icons/fa";
+import {
+  FaBehance,
+  FaFacebook,
+  FaInstagram,
+  FaLinkedinIn,
+  FaTwitter,
+} from "react-icons/fa";
 import { LiaCopyright } from "react-icons/lia";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
-import { FaTwitter } from "react-icons/fa";
+const services = [
+  "Brand Insights and Audit",
+  "Brand Strategy and Positioning",
+  "Brand Architecture",
+  "Brand Story and Narratives",
+  "Voice and Communication",
+  "Naming and Identity System",
+  "Branded Environment",
+  "Brand Internalization",
+  "Brand Governance",
+  "Brand Insights and Audit",
+  "Brand Strategy and Positioning",
+  "Brand Architecture",
+  "Brand Story and Narratives",
+  "Voice and Communication",
+  "Naming and Identity System",
+  "Branded Environment",
+  "Brand Internalization",
+  "Brand Governance",
+  "Brand Story and Narratives",
+  "Voice and Communication",
+  "Naming and Identity System",
+  "Branded Environment",
+  "Brand Internalization",
+  "Brand Governance",
 
-import { FaInstagram, FaLinkedinIn } from "react-icons/fa6";
+  // Add more services as needed
+];
 
 const HomeFooter = () => {
+  const chunks = Array.from(
+    { length: Math.ceil(services.length / 9) },
+    (_, i) => services.slice(i * 9, i * 9 + 9)
+  );
+
   return (
     <div className="px-[6.5vw] flex h-full gap-24 bg-yellowBg ">
       <div className="pt-[9.5vh] pb-[10vh] flex flex-col justify-between">
+        {/* Contact Information */}
         <div>
           <div className="text-xl font-semibold">Address:</div>
           <div className="text-xl w-52">
@@ -20,20 +64,20 @@ const HomeFooter = () => {
         </div>
         <div>
           <div className="text-xl font-semibold">Phone:</div>
-          <div className="text-xl ">+91 2661 6280</div>
+          <div className="text-xl">+91 2661 6280</div>
         </div>
         <div>
           <div className="text-xl font-semibold">Inquiries:</div>
           <div className="flex items-center gap-4">
-            <div className="text-xl ">Lets talk</div>
-            <Image src={linkBtn} width={20} height={20} alt="link" />
+            <div className="text-xl">Lets talk</div>
+            <Image src={linkBtn} width={17} height={17} alt="link" />
           </div>
         </div>
         <div>
           <div className="text-xl font-semibold">Careers:</div>
           <div className="flex items-center gap-4">
             <div className="text-xl">View openings</div>
-            <Image src={linkBtn} width={20} height={20} alt="link" />
+            <Image src={linkBtn} width={17} height={17} alt="link" />
           </div>
         </div>
         <div>
@@ -47,31 +91,51 @@ const HomeFooter = () => {
           </div>
         </div>
       </div>
+
+      {/* Our Services */}
       <div className="pt-[9.5vh] pb-[10vh] flex flex-col justify-between">
         <div>
           <div className="text-xl font-semibold">Our Services:</div>
-          <div className="text-xl ">
-            <li className="list-none"> Brand Insights and Audit</li>
-            <li className="list-none"> Brand Strategy and Positioning</li>
-            <li className="list-none"> Brand Architecture</li>
-            <li className="list-none"> Brand Story and Narratives</li>
-            <li className="list-none"> Voice and Communication</li>
-            <li className="list-none"> Naming and Identity System</li>
-            <li className="list-none"> Branded Environment</li>
-            <li className="list-none"> Brand Internalization</li>
-            <li className="list-none"> Brand Governance</li>
+          <div className="text-xl">
+            <Carousel opts={{ align: "start" }} orientation="vertical">
+              <CarouselContent className="h-[16rem] w-[20vw] py-4">
+                {chunks.map((chunk, index) => (
+                  <CarouselItem key={index}>
+                    <div>
+                      {chunk.map((service, sIndex) => (
+                        <li key={sIndex} className="list-none">
+                          {service}
+                        </li>
+                      ))}
+                    </div>
+                  </CarouselItem>
+                ))}
+
+                {/* {services.map((service, index) => (
+                  <div key={index}>
+                    <li className="list-none h-8">{service}</li>
+                  </div>
+                ))} */}
+              </CarouselContent>
+              <CarouselPrevious />
+              <CarouselNext />
+            </Carousel>
           </div>
         </div>
+
+        {/* Find Us */}
         <div>
           <div className="text-xl font-semibold">Find Us:</div>
-          <div className="text-xl ">(^) Google Map</div>
+          <div className="text-xl">(^) Google Map</div>
         </div>
+
+        {/* Copyright */}
         <div>
           <div className="flex items-center gap-1">
             <LiaCopyright className="h-5 w-5" />
             <div className="text-xl font-semibold">Copyright 2024</div>
           </div>
-          <div className="text-xl ">All Rights Reserved</div>
+          <div className="text-xl">All Rights Reserved</div>
         </div>
       </div>
     </div>
