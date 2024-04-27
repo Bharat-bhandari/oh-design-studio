@@ -1,7 +1,10 @@
 import LandingPage from "@/components/LandingPage/LandingPage";
 import AboutusMobile1 from "@/components/MobileView/AboutusMobile1";
+import AboutusMobile2 from "@/components/MobileView/AboutusMobile2";
+import FooterMobile from "@/components/MobileView/FooterMobile";
 import LandingPageMobile from "@/components/MobileView/LandingPageMobile";
 import MobileNav from "@/components/MobileView/MobileNav";
+import PortfolioMobile from "@/components/MobileView/PortfolioMobile";
 import React from "react";
 
 const Home = () => {
@@ -14,6 +17,9 @@ const Home = () => {
         <MobileNav />
         <LandingPageMobile />
         <AboutusMobile1 />
+        <AboutusMobile2 />
+        <PortfolioMobile />
+        <FooterMobile />
       </div>
     </main>
   );

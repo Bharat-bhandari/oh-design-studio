@@ -2,6 +2,8 @@ import React from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
 import home1 from "@/assets/mobileImage/home1.png";
+import home2 from "@/assets/mobileImage/home2.png";
+import home3 from "@/assets/mobileImage/home3.png";
 import Image from "next/image";
 import { DotButton, useDotButton } from "./EmblaCarouselDotButton";
 
@@ -22,10 +24,10 @@ export default function EmblaCarousel() {
             <Image className="h-full w-full" src={home1} alt="home1 Image" />
           </div>
           <div className="embla__slide flex justify-center items-center h-full">
-            Slide 2
+            <Image className="h-full w-full" src={home2} alt="home1 Image" />
           </div>
           <div className="embla__slide flex justify-center items-center h-full">
-            Slide 3
+            <Image className="h-full w-full" src={home3} alt="home1 Image" />
           </div>
         </div>
       </div>
