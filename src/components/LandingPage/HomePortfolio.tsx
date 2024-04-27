@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import Link from "next/link";
 
 const HomePortfolio = () => {
   const container = useRef<HTMLDivElement>(null);
@@ -163,10 +164,12 @@ const HomePortfolio = () => {
   return (
     <div ref={container} className="grid grid-cols-3 h-full w-full">
       <div className="bg-blue-400 boxes relative overflow-hidden cursor-pointer">
-        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
-        <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
-          Hello
-        </div>
+        <Link href="/single-portfolio">
+          <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
+          <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
+            Hello
+          </div>
+        </Link>
       </div>
       <div className="bg-yellow-400 boxes relative overflow-hidden cursor-pointer">
         <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>

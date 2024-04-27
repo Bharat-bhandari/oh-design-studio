@@ -70,7 +70,7 @@ const LandingPage = () => {
         pin: true,
         snap: 1 / (sections.length - 1),
         start: "center center",
-        scrub: 1,
+        scrub: 3,
         end: () => `+=${maxWidth}`,
         invalidateOnRefresh: true,
         // markers: {
