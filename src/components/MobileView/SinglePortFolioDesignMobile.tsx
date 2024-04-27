@@ -45,7 +45,10 @@ const SinglePortFolioDesignMobile = () => {
       </div>
 
       {images.map((image, index) => (
-        <div className="h-[80vw] relative w-full rotate-image bg-yellow-400">
+        <div
+          key={index}
+          className="h-[80vw] relative w-full rotate-image bg-yellow-400"
+        >
           <Image src={image.src} alt={image.alt} layout="fill" />
         </div>
       ))}

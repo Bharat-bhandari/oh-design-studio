@@ -10,8 +10,6 @@ import { useContext, useRef } from "react";
 import Link from "next/link";
 import { TransitionContext } from "@/context/TransitionContext";
 
-import { LiaCopyright } from "react-icons/lia";
-
 import { Draggable } from "gsap/dist/Draggable";
 
 import {
@@ -21,6 +19,7 @@ import {
   FaLinkedinIn,
   FaTwitter,
 } from "react-icons/fa";
+import { LiaCopyright } from "react-icons/lia";
 
 import Image from "next/image";
 
