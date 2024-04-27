@@ -69,10 +69,10 @@ const EmblaCarousalDesktop = () => {
           <DotButton
             key={index}
             onClick={() => onDotButtonClick(index)}
-            className={"embla__dot h-3 w-3 rounded-full border-0 bg-textGray cursor-pointer".concat(
+            className={"embla__dot h-3 w-3 rounded-full border-0  cursor-pointer".concat(
               index === selectedIndex
                 ? " embla__dot--selected bg-gray-200 "
-                : ""
+                : " bg-textGray"
             )}
           />
         ))}

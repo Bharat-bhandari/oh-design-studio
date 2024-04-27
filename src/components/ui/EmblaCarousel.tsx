@@ -35,10 +35,10 @@ export default function EmblaCarousel() {
           <DotButton
             key={index}
             onClick={() => onDotButtonClick(index)}
-            className={"embla__dot h-3 w-3 rounded-full border-0 bg-textGray".concat(
+            className={"embla__dot h-3 w-3 rounded-full border-0 ".concat(
               index === selectedIndex
                 ? " embla__dot--selected bg-gray-200 "
-                : ""
+                : "bg-textGray"
             )}
           />
         ))}
