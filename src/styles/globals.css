@@ -15,6 +15,10 @@ body {
   /* font-family: "Open Sans", sans-serif; */
 }
 
+.rotate-image {
+  transform: rotate(90deg);
+}
+
 .embla__viewport {
   overflow: hidden;
 }
