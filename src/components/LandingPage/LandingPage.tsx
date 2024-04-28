@@ -68,9 +68,9 @@ const LandingPage = () => {
         animation: scrollTween,
         trigger: container.current,
         pin: true,
-        snap: 1 / (sections.length - 1),
+        // snap: 1 / (sections.length - 1),
         start: "center center",
-        scrub: 3,
+        scrub: 2,
         end: () => `+=${maxWidth}`,
         invalidateOnRefresh: true,
         // markers: {

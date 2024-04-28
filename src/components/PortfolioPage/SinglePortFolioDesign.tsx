@@ -65,12 +65,20 @@ const SinglePortFolioDesign = () => {
         });
       };
 
+      let scrollWidth: number = maxWidth;
+
+      if (container.current) {
+        scrollWidth = container.current.scrollWidth;
+      }
+
       getMaxWidth();
       ScrollTrigger.addEventListener("refreshInit", getMaxWidth);
 
       let scrollTween = gsap.to(sections, {
-        x: () => `-${maxWidth - window.innerWidth}`,
+        // x: () => `-${maxWidth - window.innerWidth}`,
         // xPercent: -amountToScroll, // amount to scroll
+
+        x: () => -(scrollWidth - document.documentElement.clientWidth) + "px",
 
         ease: "none",
       });
@@ -157,10 +165,10 @@ const SinglePortFolioDesign = () => {
         <div className="flex h-screen hello cursor-default ">
           <div className="panel h-[75vh] my-auto  w-[46vw] bg-yellowBg ml-[4vw] flex-shrink-0 ">
             <div className=" flex flex-col justify-center h-full pl-[18%] pr-[10%]">
-              <div className="text-8xl font-semibold text-textGray mb-6">
+              <div className="text-[10vh] font-semibold text-textGray mb-6">
                 Tata Housing
               </div>
-              <div className="mb-6 text">
+              <div className="mb-6 hidden lg:block text-sm lg:text-base ">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
                 laboriosam repellat unde numquam nemo. Tempore adipisci impedit
                 aperiam neque. Accusantium possimus, tempore beatae vel iusto,
@@ -171,7 +179,15 @@ const SinglePortFolioDesign = () => {
                 tenetur voluptates, nihil dolor qui accusantium ut. Architecto
                 alias numquam animi earum
               </div>
-              <div>Sound Interesting? Scroll for more team vibes.</div>
+              <div className="mb-6  lg:hidden text-sm  ">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
+                laboriosam repellat unde numquam nemo. Tempore adipisci impedit
+                aperiam neque.
+              </div>
+
+              <div className="text-sm lg:text-base">
+                Sound Interesting? Scroll for more team vibes.
+              </div>
             </div>
           </div>
 

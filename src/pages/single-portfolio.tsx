@@ -10,7 +10,7 @@ const SinglePortfolio = () => {
         <Nav />
         <SinglePortFolioDesign />
       </div>
-      <div>
+      <div className="sm:hidden">
         <SinglePortFolioDesignMobile />
       </div>
     </>

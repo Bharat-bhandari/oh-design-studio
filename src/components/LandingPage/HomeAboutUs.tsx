@@ -43,12 +43,12 @@ const HomeAboutUs = () => {
       className="px-[6.5vw] flex justify-between h-full gap-[5vw]"
       ref={containerRef}
     >
-      <div className="pt-[9.5vh] pb-[10vh] flex flex-col justify-between ">
-        <div className="text-textGray text-7xl font-semibold test">
+      <div className="pt-[9.5vh] h-[55vh] overflow-hidden flex flex-col justify-between ">
+        <div className="text-textGray text-[4.5vw]  font-semibold test">
           Character is a branding and design agency with studios in New York and
           San Francisco.
         </div>
-        <div className="text-black text-base max-w-[60%]">
+        <div className="text-black md:text-base max-w-[60%] text-sm">
           Since Michael Ferdman founded Firstborn in 1997, weve seen the digital
           landscape change dramatically. Our industry has transformed, our
           clients businesses and their challenges have become more complex,

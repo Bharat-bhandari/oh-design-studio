@@ -134,7 +134,7 @@ const HomeAboutUs2: React.FC = () => {
               ref={(el) => {
                 headingsRef.current[index] = el;
               }}
-              className="text-5xl font-semibold opacity-60 cursor-pointer"
+              className="md:text-4xl text-3xl lg:text-5xl font-semibold opacity-60 cursor-pointer"
             >
               {item.heading}
             </div>
