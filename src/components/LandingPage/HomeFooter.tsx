@@ -98,7 +98,7 @@ const HomeFooter = () => {
           <div className="text-xl font-semibold">Our Services:</div>
           <div className="text-xl">
             <Carousel opts={{ align: "start" }} orientation="vertical">
-              <CarouselContent className="h-[16rem] w-[20vw] py-4">
+              <CarouselContent className="h-[16rem] w-[20vw] ">
                 {chunks.map((chunk, index) => (
                   <CarouselItem key={index}>
                     <div>

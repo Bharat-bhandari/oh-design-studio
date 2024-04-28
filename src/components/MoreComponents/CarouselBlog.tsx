@@ -103,22 +103,22 @@ export default function BlogCarousel() {
       orientation="vertical"
       className="w-[87vw] h-fit"
     >
-      <CarouselContent className="h-[48vh]">
+      <CarouselContent className="h-[48vh] ">
         {blogs.map((blogGroup, groupIndex) => (
           <CarouselItem key={groupIndex}>
-            <div className="grid grid-cols-3 mx-[5.5vw] h-[46vh]">
+            <div className="grid grid-cols-3  mx-[5.5vw] h-[48vh]">
               {blogGroup.map((blog, index) => (
                 <div
                   key={blog.id}
                   onMouseEnter={() => handleMouseEnter(groupIndex * 3 + index)}
                   onMouseLeave={() => handleMouseLeave(groupIndex * 3 + index)}
-                  className={`flex flex-col gap-6 px-7 border-r border-solid border-0 border-textGray ${
+                  className={`flex flex-col gap-6 px-7 h-[48vh] border-r border-solid border-0 border-textGray ${
                     (groupIndex * 3 + index) % 3 === 2 ? "border-r-0" : ""
                   }`}
                 >
-                  <div className="flex flex-col justify-between h-full">
+                  <div className="flex flex-col justify-around h-full">
                     <div>
-                      <div className="mb-8 mt-4 flex flex-row">
+                      <div className="mb-8 flex flex-row">
                         <div className="flex gap-3 items-center">
                           <div
                             ref={(el) => {
