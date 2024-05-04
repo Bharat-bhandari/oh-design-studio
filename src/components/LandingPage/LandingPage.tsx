@@ -10,9 +10,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { TransitionContext } from "@/context/TransitionContext";
 
-import CImage1 from "@/assets/home/CImage1.png";
-import CImage2 from "@/assets/home/CImage2.png";
-import CImage3 from "@/assets/home/CImage3.png";
 import HomeAboutUs from "./HomeAboutUs";
 import HomeAboutUs2 from "./HomeAboutUs2";
 import HomeFooter from "./HomeFooter";
@@ -203,8 +200,9 @@ const LandingPage = () => {
       setTimeout(() => {
         init();
       }, 0.0001);
-
-      setPreviousRoute(pathname);
+      if (pathname !== null) {
+        setPreviousRoute(pathname);
+      }
 
       console.log("previous route", previousRoute);
 

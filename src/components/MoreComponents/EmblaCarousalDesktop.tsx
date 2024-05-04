@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import CImage1 from "@/assets/home/CImage1.png";
-import CImage2 from "@/assets/home/CImage2.png";
-import CImage3 from "@/assets/home/CImage3.png";
+
+type CarouselItem = {
+  slug: string;
+  entry: {
+    title: string;
+    client_name: string;
+    headline1: string;
+    headline2: string;
+    project_link: string;
+    project_image: string;
+  };
+};
 
 import {
   DotButton,
@@ -13,54 +22,55 @@ import Image from "next/image";
 const EmblaCarousalDesktop = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel();
 
+  const [carouselData, setCarouselData] = useState<CarouselItem[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/home-carousel");
+        const data = await response.json();
+        setCarouselData(data);
+      } catch (error) {
+        console.error("Error fetching carousel data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
     useDotButton(emblaApi);
   return (
     <div className="embla h-full ">
       <div className="embla__viewport h-full " ref={emblaRef}>
         <div className="embla__container h-full">
-          <div className="embla__slide flex justify-center items-center h-full relative">
-            <Image className="h-full w-full " src={CImage1} alt="img " />
-            <div className="bottom-[6.5vh] left-[6.5vw] text-white brandText absolute">
-              <div className=" text-sm font-semibold">CLIENT NAME</div>
-              <div className=" text-4xl font-semibold ">WE CREATE</div>
-              <div className=" text-4xl font-semibold mb-[1.5vh] ">
-                GAME CHANGING BRANDS
-              </div>
+          {carouselData.map((item, index) => (
+            <div
+              key={index}
+              className="embla__slide flex justify-center items-center h-full relative"
+            >
+              <Image
+                className="h-full w-full "
+                src={item.entry.project_image}
+                width={500}
+                height={500}
+                alt="img "
+              />
+              <div className="bottom-[6.5vh] left-[6.5vw] text-white brandText absolute">
+                <div className=" text-sm font-semibold">
+                  {item.entry.client_name}
+                </div>
+                <div className=" text-4xl font-semibold ">WE CREATE</div>
+                <div className=" text-4xl font-semibold mb-[1.5vh] ">
+                  GAME CHANGING BRANDS
+                </div>
 
-              <div className="text-sm text-[#fff500] font-semibold">
-                GO TO PROJECT
+                <div className="text-sm text-[#fff500] font-semibold">
+                  GO TO PROJECT
+                </div>
               </div>
             </div>
-          </div>
-          <div className="embla__slide flex justify-center items-center h-full relative">
-            <Image className="h-full w-full " src={CImage2} alt="img" />
-            <div className="bottom-[6.5vh] left-[6.5vw] text-white  absolute">
-              <div className=" text-sm font-semibold">CLIENT NAME</div>
-              <div className=" text-4xl font-semibold ">WE CREATE</div>
-              <div className=" text-4xl font-semibold mb-[1.5vh] ">
-                GAME CHANGING BRANDS
-              </div>
-
-              <div className="text-sm text-[#fff500] font-semibold">
-                GO TO PROJECT
-              </div>
-            </div>
-          </div>
-          <div className="embla__slide flex justify-center items-center h-full relative">
-            <Image className="h-full w-full " src={CImage3} alt="img" />
-            <div className="bottom-[6.5vh] left-[6.5vw] text-white  absolute">
-              <div className=" text-sm font-semibold">CLIENT NAME</div>
-              <div className=" text-4xl font-semibold ">WE CREATE</div>
-              <div className=" text-4xl font-semibold mb-[1.5vh] ">
-                GAME CHANGING BRANDS
-              </div>
-
-              <div className="text-sm text-[#fff500] font-semibold">
-                GO TO PROJECT
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 

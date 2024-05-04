@@ -8,31 +8,39 @@ export default config({
       owner: "Bharat-bhandari",
       name: "oh-design-studio",
     },
+    // kind: "local",
   },
   collections: {
-    posts: collection({
-      label: "Posts",
+    home_carousel: collection({
+      label: "Home Carousel",
       slugField: "title",
-      path: "src/content/posts/*",
-      format: { contentField: "content" },
+      path: "src/content/home/homeCarousel/*",
+      format: { data: "json" },
       schema: {
-        title: fields.slug({ name: { label: "Title" } }),
-        content: fields.document({
-          label: "Content",
-          formatting: true,
-          dividers: true,
-          links: true,
-          images: {
-            directory: "public/site/images",
-            publicPath: "/site/images",
-            schema: {
-              title: fields.text({
-                label: "Caption",
-                description:
-                  "The text to display under the image in a caption.",
-              }),
-            },
-          },
+        title: fields.slug({
+          name: { label: "Title" },
+        }),
+        client_name: fields.text({
+          label: "Client Name",
+          validation: { isRequired: true },
+        }),
+        headline1: fields.text({
+          label: "Headline 1",
+          validation: { isRequired: true },
+        }),
+        headline2: fields.text({
+          label: "Headline 2",
+          validation: { isRequired: true },
+        }),
+        project_link: fields.text({
+          label: "Project Link",
+          validation: { isRequired: true },
+        }),
+        project_image: fields.image({
+          label: "Background Image",
+          directory: "/public/images/home/homeCarousal/",
+          publicPath: "/images/home/homeCarousal/",
+          validation: { isRequired: true },
         }),
       },
     }),
