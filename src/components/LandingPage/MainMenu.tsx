@@ -30,7 +30,9 @@ const MainMenu = () => {
         }
       );
 
-      setPreviousRoute(pathname);
+      if (pathname !== null) {
+        setPreviousRoute(pathname);
+      }
 
       timeline.add(
         gsap.to(container.current, {

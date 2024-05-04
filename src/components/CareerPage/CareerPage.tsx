@@ -77,8 +77,9 @@ const CareerPage = () => {
       setTimeout(() => {
         init();
       }, 0.0001);
-
-      setPreviousRoute(pathname);
+      if (pathname !== null) {
+        setPreviousRoute(pathname);
+      }
 
       const totalContentWidth = sections.length * window.innerWidth;
 

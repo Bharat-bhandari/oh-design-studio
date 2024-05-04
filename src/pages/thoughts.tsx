@@ -75,8 +75,9 @@ const Thoughts = () => {
         }
       );
 
-      setPreviousRoute(pathname);
-
+      if (pathname !== null) {
+        setPreviousRoute(pathname);
+      }
       const totalContentWidth = sections.length * window.innerWidth;
 
       timeline.add(
