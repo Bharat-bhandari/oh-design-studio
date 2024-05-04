@@ -38,8 +38,8 @@ export default config({
         }),
         project_image: fields.image({
           label: "Background Image",
-          directory: "/public/images/home/homeCarousal/",
-          publicPath: "/images/home/homeCarousal/",
+          directory: "/src/assets/homeImage/homeCarousal/",
+          publicPath: "/src/assets/homeImage/homeCarousal/",
           validation: { isRequired: true },
         }),
       },
