@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
-import c1 from "@/assets/home/CImage1.png";
-
 type CarouselItem = {
   slug: string;
   entry: {
@@ -53,7 +51,7 @@ const EmblaCarousalDesktop = () => {
             >
               <Image
                 className="h-full w-full "
-                src={c1}
+                src={item.entry.project_image}
                 width={500}
                 height={500}
                 alt="img "

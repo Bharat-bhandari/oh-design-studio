@@ -1,10 +1,50 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
+import Image from "next/image";
+
+import image2 from "@/assets/portfolio/04.jpg";
+import { portfolioType } from "@/lib/keystatic";
+
+type PortfolioEntry = {
+  title: string;
+  client_name: string;
+  headline1: string;
+  headline2: string;
+  portfolio_category: string;
+  description: string;
+  project_bg_image: string;
+  portfolio_images: (string | null)[];
+};
+
+type PortfolioData = {
+  slug: string;
+  entry: PortfolioEntry;
+};
+
+type Portfolios = PortfolioData[];
 
 const HomePortfolio = () => {
   const container = useRef<HTMLDivElement>(null);
+
+  const [portfolioData, setPortfolioData] = useState<Portfolios>([]);
+
+  console.log("gfdhjs", portfolioData);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/portfolio");
+        const data = await response.json();
+        setPortfolioData(data);
+      } catch (error) {
+        console.error("Error fetching carousel data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useGSAP(
     () => {
@@ -158,49 +198,43 @@ const HomePortfolio = () => {
         });
       };
     },
-    { scope: container }
+    { scope: container, dependencies: [portfolioData] }
   );
 
   return (
     <div ref={container} className="grid grid-cols-3 h-full w-full">
-      <div className="bg-blue-400 boxes relative overflow-hidden cursor-pointer">
-        <Link href="/single-portfolio">
-          <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
-          <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
-            Hello
-          </div>
-        </Link>
-      </div>
-      <div className="bg-yellow-400 boxes relative overflow-hidden cursor-pointer">
-        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
-        <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
-          Hello
+      {portfolioData.map((item, index) => (
+        <div
+          key={index}
+          className=" boxes z-50 h-[37.5vh] relative overflow-hidden cursor-pointer"
+        >
+          <Image
+            src={item.entry.project_bg_image}
+            width={500}
+            height={500}
+            alt="ima"
+            className="h-full w-full"
+          />
+          <Link href={`/portfolios/${item.slug}`}>
+            <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-[#f2f3f2] text-white z-10"></div>
+            <div className="textOverlay absolute inset-0 w-full h-full flex flex-col justify-center items-center text-[#534e50] left-[100%] z-20 text-4xl ">
+              <div className=" text-sm font-semibold mb-2 text-[#191718]">
+                {item.entry.client_name}
+              </div>
+              <div className=" text-3xl font-semibold ">
+                {item.entry.headline1}
+              </div>
+              <div className=" text-3xl font-semibold mb-[1.5vh] ">
+                {item.entry.headline2}
+              </div>
+
+              <div className="text-sm font-semibold mt-6">
+                {item.entry.portfolio_category}
+              </div>
+            </div>
+          </Link>
         </div>
-      </div>
-      <div className="bg-red-400 boxes relative overflow-hidden cursor-pointer">
-        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
-        <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
-          Hello
-        </div>
-      </div>
-      <div className="bg-green-400 boxes relative overflow-hidden cursor-pointer">
-        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
-        <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
-          Hello
-        </div>
-      </div>
-      <div className="bg-pink-400 boxes relative overflow-hidden cursor-pointer">
-        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
-        <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
-          Hello
-        </div>
-      </div>
-      <div className="bg-purple-400 boxes relative overflow-hidden cursor-pointer">
-        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-black bg-opacity-80 text-white z-10"></div>
-        <div className="textOverlay absolute inset-0 w-full h-full flex justify-center items-center left-[100%] z-20 text-4xl ">
-          Hello
-        </div>
-      </div>
+      ))}
     </div>
   );
 };

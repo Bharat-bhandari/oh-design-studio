@@ -1,0 +1,20 @@
+{
+  "title": "Logo",
+  "client_name": "Logo",
+  "headline1": "Test",
+  "headline2": "Test and Test",
+  "portfolio_category": "Test",
+  "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, nulla quas iure necessitatibus voluptatem quasi odio exercitationem eius dolorem natus placeat temporibus suscipit, officiis ab aliquid fugiat! Dolorem, possimus ullam.",
+  "project_bg_image": "/images/portfolios/logo/project_bg_image.jpg",
+  "portfolio_images": [
+    "/images/singlePortfolio/logo/portfolio_images/0.jpg",
+    "/images/singlePortfolio/logo/portfolio_images/1.jpg",
+    "/images/singlePortfolio/logo/portfolio_images/2.jpg",
+    "/images/singlePortfolio/logo/portfolio_images/3.jpg",
+    "/images/singlePortfolio/logo/portfolio_images/4.jpg",
+    "/images/singlePortfolio/logo/portfolio_images/5.jpg",
+    "/images/singlePortfolio/logo/portfolio_images/6.jpg",
+    "/images/singlePortfolio/logo/portfolio_images/7.jpg",
+    "/images/singlePortfolio/logo/portfolio_images/8.jpg"
+  ]
+}
