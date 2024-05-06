@@ -9,6 +9,8 @@ import linkBtn from "@/assets/images/linkBtn.png";
 import { FaTwitter } from "react-icons/fa";
 
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa6";
+import { toast } from "sonner";
+import { Toaster } from "../ui/sonner";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState<{
@@ -49,7 +51,7 @@ const ContactPage = () => {
 
     // Validate phone number
     if (!validatePhoneNumber(formData.phone)) {
-      alert("Please enter a valid phone number");
+      toast("Please enter a valid 10 Digit phone number");
       setIsSubmitting(false); // Re-enable the submit button
       return;
     }
@@ -76,11 +78,11 @@ const ContactPage = () => {
         message: "",
       });
       setIsSubmitting(false);
-      alert("Form submitted successfully!");
+      toast("Form submitted successfully!");
     } catch (error) {
       console.error("Error submitting form:", error);
       setIsSubmitting(false);
-      alert("Failed to submit form. Please try again later.");
+      toast("Failed to submit form. Please try again later.");
     }
   };
 
