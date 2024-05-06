@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 
 import { FaBehance, FaFacebook } from "react-icons/fa";
 import linkBtn from "@/assets/images/linkBtn.png";
@@ -11,28 +11,83 @@ import { FaTwitter } from "react-icons/fa";
 import { FaInstagram, FaLinkedinIn } from "react-icons/fa6";
 
 const ContactPage = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    fullName: string;
+    email: string;
+    phone: string;
+    message: string;
+  }>({
     fullName: "",
     email: "",
     phone: "",
     message: "",
   });
 
-  //   const handleChange = (e) => {
-  //     const { name, value } = e.target;
-  //     setFormData({
-  //       ...formData,
-  //       [name]: value,
-  //     });
-  //   };
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  //   const handleSubmit = (e) => {
-  //     e.preventDefault();
-  //     // You can perform validation here before sending the data
-  //     console.log(formData);
-  //     // Here you would typically send the form data to your backend or handle it accordingly
-  //     // For simplicity, I'm just logging the form data to the console
-  //   };
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const validatePhoneNumber = (phone: string): boolean => {
+    // Regular expression to match a valid Indian phone number
+    const phoneRegex = /^\+?[91]?[789]\d{9}$/;
+    return phoneRegex.test(phone);
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Disable the submit button during submission
+    setIsSubmitting(true);
+
+    // Validate phone number
+    if (!validatePhoneNumber(formData.phone)) {
+      alert("Please enter a valid phone number");
+      setIsSubmitting(false); // Re-enable the submit button
+      return;
+    }
+
+    try {
+      // Send the form data to the backend
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      // Reset the form and enable the submit button after successful submission
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+      setIsSubmitting(false);
+      alert("Form submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setIsSubmitting(false);
+      alert("Failed to submit form. Please try again later.");
+    }
+  };
+
+  // Check if all fields are filled
+  const isFormValid = Object.values(formData).every(
+    (value) => value.trim() !== ""
+  );
 
   return (
     <div className="px-[6.5vw] h-full">
@@ -47,8 +102,7 @@ const ContactPage = () => {
           </p>
         </div>
         <div className="col-span-4 ">
-          {/* <form onSubmit={handleSubmit} className="flex flex-col gap-4 pl-10"> */}
-          <form className="flex flex-col gap-4 pl-10">
+          <form className="flex flex-col gap-4 pl-10" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="fullName" className="flex py-2">
                 Full name
@@ -59,7 +113,7 @@ const ContactPage = () => {
                 id="fullName"
                 name="fullName"
                 value={formData.fullName}
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -73,7 +127,7 @@ const ContactPage = () => {
                 id="email"
                 name="email"
                 value={formData.email}
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -83,11 +137,11 @@ const ContactPage = () => {
               </label>
               <input
                 className="w-full p-1"
-                type="tel"
+                type="tel" // Changed type to "tel" for better mobile support
                 id="phone"
                 name="phone"
                 value={formData.phone}
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
               />
             </div>
@@ -100,15 +154,20 @@ const ContactPage = () => {
                 id="message"
                 name="message"
                 value={formData.message}
-                // onChange={handleChange}
+                onChange={handleChange}
                 required
               ></textarea>
             </div>
             <button
               type="submit"
-              className="bg-yellowBg border-0 py-2 w-fit  px-5 mt-4 font-semibold"
+              className={`bg-yellowBg border-0 py-2 w-fit  px-5 mt-4 font-semibold ${
+                !isFormValid || isSubmitting
+                  ? "cursor-not-allowed"
+                  : "cursor-pointer"
+              }`}
+              disabled={!isFormValid || isSubmitting} // Disable button if form is invalid or submitting
             >
-              SEND
+              {isSubmitting ? "SENDING..." : "SEND"}
             </button>
           </form>
         </div>
