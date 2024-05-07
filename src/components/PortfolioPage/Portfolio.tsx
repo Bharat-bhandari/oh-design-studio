@@ -10,7 +10,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { TransitionContext } from "@/context/TransitionContext";
 import HomeFooter from "../LandingPage/HomeFooter";
-import HomePortfolio from "../LandingPage/HomePortfolio";
 import Image from "next/image";
 
 import { Draggable } from "gsap/dist/Draggable";
@@ -44,214 +43,16 @@ const Portfolio = () => {
 
   const { setPreviousRoute } = useContext(TransitionContext);
 
-  const [portfolioData, setPortfolioData] = useState<Portfolios>([
-    {
-      slug: "logo",
-      entry: {
-        title: "Logo",
-        client_name: "Logo",
-        headline1: "Test",
-        headline2: "Test and Test",
-        portfolio_category: "Test",
-        description:
-          "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, nulla quas iure necessitatibus voluptatem quasi odio exercitationem eius dolorem natus placeat temporibus suscipit, officiis ab aliquid fugiat! Dolorem, possimus ullam.",
-        project_bg_image: "/images/portfolios/logo/project_bg_image.jpg",
-        portfolio_images: [
-          "/images/singlePortfolio/logo/portfolio_images/0.jpg",
-          "/images/singlePortfolio/logo/portfolio_images/1.jpg",
-          "/images/singlePortfolio/logo/portfolio_images/2.jpg",
-          "/images/singlePortfolio/logo/portfolio_images/3.jpg",
-          "/images/singlePortfolio/logo/portfolio_images/4.jpg",
-          "/images/singlePortfolio/logo/portfolio_images/5.jpg",
-          "/images/singlePortfolio/logo/portfolio_images/6.jpg",
-          "/images/singlePortfolio/logo/portfolio_images/7.jpg",
-          "/images/singlePortfolio/logo/portfolio_images/8.jpg",
-        ],
-      },
-    },
-    {
-      slug: "taj-villas",
-      entry: {
-        title: "Taj Villas",
-        client_name: "Taj Villas",
-        headline1: "We create",
-        headline2: "Game Changing Brands",
-        portfolio_category: "Test",
-        description:
-          "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, nulla quas iure necessitatibus voluptatem quasi odio exercitationem eius dolorem natus placeat temporibus suscipit, officiis ab aliquid fugiat! Dolorem, possimus ullam.",
-        project_bg_image: "/images/portfolios/taj-villas/project_bg_image.jpg",
-        portfolio_images: [
-          "/images/singlePortfolio/taj-villas/portfolio_images/0.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/1.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/2.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/3.jpg",
-        ],
-      },
-    },
-    {
-      slug: "taj-villas",
-      entry: {
-        title: "Taj Villas",
-        client_name: "Taj Villas",
-        headline1: "We create",
-        headline2: "Game Changing Brands",
-        portfolio_category: "Test",
-        description:
-          "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, nulla quas iure necessitatibus voluptatem quasi odio exercitationem eius dolorem natus placeat temporibus suscipit, officiis ab aliquid fugiat! Dolorem, possimus ullam.",
-        project_bg_image: "/images/portfolios/taj-villas/project_bg_image.jpg",
-        portfolio_images: [
-          "/images/singlePortfolio/taj-villas/portfolio_images/0.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/1.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/2.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/3.jpg",
-        ],
-      },
-    },
-    {
-      slug: "taj-villas",
-      entry: {
-        title: "Taj Villas",
-        client_name: "Taj Villas",
-        headline1: "We create",
-        headline2: "Game Changing Brands",
-        portfolio_category: "Test",
-        description:
-          "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, nulla quas iure necessitatibus voluptatem quasi odio exercitationem eius dolorem natus placeat temporibus suscipit, officiis ab aliquid fugiat! Dolorem, possimus ullam.",
-        project_bg_image: "/images/portfolios/taj-villas/project_bg_image.jpg",
-        portfolio_images: [
-          "/images/singlePortfolio/taj-villas/portfolio_images/0.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/1.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/2.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/3.jpg",
-        ],
-      },
-    },
-    {
-      slug: "taj-villas",
-      entry: {
-        title: "Taj Villas",
-        client_name: "Taj Villas",
-        headline1: "We create",
-        headline2: "Game Changing Brands",
-        portfolio_category: "Test",
-        description:
-          "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, nulla quas iure necessitatibus voluptatem quasi odio exercitationem eius dolorem natus placeat temporibus suscipit, officiis ab aliquid fugiat! Dolorem, possimus ullam.",
-        project_bg_image: "/images/portfolios/taj-villas/project_bg_image.jpg",
-        portfolio_images: [
-          "/images/singlePortfolio/taj-villas/portfolio_images/0.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/1.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/2.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/3.jpg",
-        ],
-      },
-    },
-    {
-      slug: "taj-villas",
-      entry: {
-        title: "Taj Villas",
-        client_name: "Taj Villas",
-        headline1: "We create",
-        headline2: "Game Changing Brands",
-        portfolio_category: "Test",
-        description:
-          "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, nulla quas iure necessitatibus voluptatem quasi odio exercitationem eius dolorem natus placeat temporibus suscipit, officiis ab aliquid fugiat! Dolorem, possimus ullam.",
-        project_bg_image: "/images/portfolios/taj-villas/project_bg_image.jpg",
-        portfolio_images: [
-          "/images/singlePortfolio/taj-villas/portfolio_images/0.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/1.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/2.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/3.jpg",
-        ],
-      },
-    },
-    {
-      slug: "taj-villas",
-      entry: {
-        title: "Taj Villas",
-        client_name: "Taj Villas",
-        headline1: "We create",
-        headline2: "Game Changing Brands",
-        portfolio_category: "Test",
-        description:
-          "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, nulla quas iure necessitatibus voluptatem quasi odio exercitationem eius dolorem natus placeat temporibus suscipit, officiis ab aliquid fugiat! Dolorem, possimus ullam.",
-        project_bg_image: "/images/portfolios/taj-villas/project_bg_image.jpg",
-        portfolio_images: [
-          "/images/singlePortfolio/taj-villas/portfolio_images/0.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/1.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/2.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/3.jpg",
-        ],
-      },
-    },
-    {
-      slug: "taj-villas",
-      entry: {
-        title: "Taj Villas",
-        client_name: "Taj Villas",
-        headline1: "We create",
-        headline2: "Game Changing Brands",
-        portfolio_category: "Test",
-        description:
-          "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, nulla quas iure necessitatibus voluptatem quasi odio exercitationem eius dolorem natus placeat temporibus suscipit, officiis ab aliquid fugiat! Dolorem, possimus ullam.",
-        project_bg_image: "/images/portfolios/taj-villas/project_bg_image.jpg",
-        portfolio_images: [
-          "/images/singlePortfolio/taj-villas/portfolio_images/0.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/1.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/2.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/3.jpg",
-        ],
-      },
-    },
-    {
-      slug: "taj-villas",
-      entry: {
-        title: "Taj Villas",
-        client_name: "Taj Villas",
-        headline1: "We create",
-        headline2: "Game Changing Brands",
-        portfolio_category: "Test",
-        description:
-          "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, nulla quas iure necessitatibus voluptatem quasi odio exercitationem eius dolorem natus placeat temporibus suscipit, officiis ab aliquid fugiat! Dolorem, possimus ullam.",
-        project_bg_image: "/images/portfolios/taj-villas/project_bg_image.jpg",
-        portfolio_images: [
-          "/images/singlePortfolio/taj-villas/portfolio_images/0.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/1.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/2.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/3.jpg",
-        ],
-      },
-    },
-    {
-      slug: "taj-villas",
-      entry: {
-        title: "Taj Villas",
-        client_name: "Taj Villas",
-        headline1: "We create",
-        headline2: "Game Changing Brands",
-        portfolio_category: "Test",
-        description:
-          "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Molestiae, nulla quas iure necessitatibus voluptatem quasi odio exercitationem eius dolorem natus placeat temporibus suscipit, officiis ab aliquid fugiat! Dolorem, possimus ullam.",
-        project_bg_image: "/images/portfolios/taj-villas/project_bg_image.jpg",
-        portfolio_images: [
-          "/images/singlePortfolio/taj-villas/portfolio_images/0.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/1.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/2.jpg",
-          "/images/singlePortfolio/taj-villas/portfolio_images/3.jpg",
-        ],
-      },
-    },
-  ]);
+  const [portfolioData, setPortfolioData] = useState<Portfolios>([]);
 
-  console.log("gfdhjs", portfolioData);
+  // console.log("gfdhjs", portfolioData);
 
-  const oddIndexData = portfolioData.filter((_, index) => index % 2 !== 0);
-  const evenIndexData = portfolioData.filter((_, index) => index % 2 === 0);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch("/api/portfolio");
         const data = await response.json();
-        // setPortfolioData(data);
+        setPortfolioData(data);
       } catch (error) {
         console.error("Error fetching carousel data:", error);
       }
@@ -321,27 +122,6 @@ const Portfolio = () => {
           );
         },
       });
-
-      // gsap.to(sections, {
-      //   xPercent: -amountToScroll, // amount to scroll
-      //   ease: "none",
-      //   scrollTrigger: {
-      //     trigger: container.current,
-      //     pin: true,
-      //     // snap: 1 / (sections.length - 1),
-      //     start: "center center",
-      //     scrub: 1,
-      //     end: () => {
-      //       return `+=${scrollSpeed}`;
-      //     },
-      //     // markers: {
-      //     //   startColor: "purple",
-      //     //   endColor: "fuchsia",
-      //     //   fontSize: "2rem",
-      //     //   indent: 200,
-      //     // },
-      //   },
-      // });
 
       const screenWidth = window.innerWidth;
 
@@ -538,72 +318,82 @@ const Portfolio = () => {
     <>
       <div ref={container} id="mainContainer" className="invisible">
         <div className="flex h-screen hello cursor-default ">
-          <div className="h-[75vh] w-auto flex my-auto flex-row  ml-[4vw]">
+          <div className="panel h-[75vh] w-auto flex my-auto flex-col  ">
             {/* <HomePortfolio /> */}
-            {oddIndexData.map((item, index) => (
-              <div
-                key={index}
-                className="panel w-[30vw] boxes z-50 h-[50%] relative overflow-hidden cursor-pointer"
-              >
-                <Image
-                  src={item.entry.project_bg_image}
-                  width={500}
-                  height={500}
-                  alt="ima"
-                  className="h-full w-full"
-                />
-                <Link href={`/portfolios/${item.slug}`}>
-                  <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-[#f2f3f2] text-white z-10"></div>
-                  <div className="textOverlay absolute inset-0 w-full h-full flex flex-col justify-center items-center text-[#534e50] left-[100%] z-20 text-4xl ">
-                    <div className=" text-sm font-semibold mb-2 text-[#191718]">
-                      {item.entry.client_name}
-                    </div>
-                    <div className=" text-3xl font-semibold ">
-                      {item.entry.headline1}
-                    </div>
-                    <div className=" text-3xl font-semibold mb-[1.5vh] ">
-                      {item.entry.headline2}
-                    </div>
+            <div className=" flex flex-row h-[50%] ml-[4vw]">
+              {portfolioData.map(
+                (item, index) =>
+                  index % 2 === 0 && (
+                    <div
+                      key={index}
+                      className=" w-[32vw] boxes z-50 h-full relative overflow-hidden cursor-pointer"
+                    >
+                      <Image
+                        src={item.entry.project_bg_image}
+                        width={500}
+                        height={500}
+                        alt="ima"
+                        className="h-full w-full"
+                      />
+                      <Link href={`/portfolios/${item.slug}`}>
+                        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-[#f2f3f2] text-white z-10"></div>
+                        <div className="textOverlay absolute inset-0 w-full h-full flex flex-col justify-center items-center text-[#534e50] left-[100%] z-20 text-4xl ">
+                          <div className=" text-sm font-semibold mb-2 text-[#191718]">
+                            {item.entry.client_name}
+                          </div>
+                          <div className=" text-3xl font-semibold ">
+                            {item.entry.headline1}
+                          </div>
+                          <div className=" text-3xl font-semibold mb-[1.5vh] ">
+                            {item.entry.headline2}
+                          </div>
 
-                    <div className="text-sm font-semibold mt-6">
-                      {item.entry.portfolio_category}
+                          <div className="text-sm font-semibold mt-6">
+                            {item.entry.portfolio_category}
+                          </div>
+                        </div>
+                      </Link>
                     </div>
-                  </div>
-                </Link>
-              </div>
-            ))}
-            {evenIndexData.map((item, index) => (
-              <div
-                key={index}
-                className="panel w-[30vw] boxes z-50 h-[50%] relative overflow-hidden cursor-pointer"
-              >
-                <Image
-                  src={item.entry.project_bg_image}
-                  width={500}
-                  height={500}
-                  alt="ima"
-                  className="h-full w-full"
-                />
-                <Link href={`/portfolios/${item.slug}`}>
-                  <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-[#f2f3f2] text-white z-10"></div>
-                  <div className="textOverlay absolute inset-0 w-full h-full flex flex-col justify-center items-center text-[#534e50] left-[100%] z-20 text-4xl ">
-                    <div className=" text-sm font-semibold mb-2 text-[#191718]">
-                      {item.entry.client_name}
-                    </div>
-                    <div className=" text-3xl font-semibold ">
-                      {item.entry.headline1}
-                    </div>
-                    <div className=" text-3xl font-semibold mb-[1.5vh] ">
-                      {item.entry.headline2}
-                    </div>
+                  )
+              )}
+            </div>
+            <div className="flex flex-row h-[50%] ml-[4vw]">
+              {portfolioData.map(
+                (item, index) =>
+                  index % 2 !== 0 && (
+                    <div
+                      key={index}
+                      className=" w-[32vw] boxes z-50 h-full relative overflow-hidden cursor-pointer"
+                    >
+                      <Image
+                        src={item.entry.project_bg_image}
+                        width={500}
+                        height={500}
+                        alt="ima"
+                        className="h-full w-full"
+                      />
+                      <Link href={`/portfolios/${item.slug}`}>
+                        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-[#f2f3f2] text-white z-10"></div>
+                        <div className="textOverlay absolute inset-0 w-full h-full flex flex-col justify-center items-center text-[#534e50] left-[100%] z-20 text-4xl ">
+                          <div className=" text-sm font-semibold mb-2 text-[#191718]">
+                            {item.entry.client_name}
+                          </div>
+                          <div className=" text-3xl font-semibold ">
+                            {item.entry.headline1}
+                          </div>
+                          <div className=" text-3xl font-semibold mb-[1.5vh] ">
+                            {item.entry.headline2}
+                          </div>
 
-                    <div className="text-sm font-semibold mt-6">
-                      {item.entry.portfolio_category}
+                          <div className="text-sm font-semibold mt-6">
+                            {item.entry.portfolio_category}
+                          </div>
+                        </div>
+                      </Link>
                     </div>
-                  </div>
-                </Link>
-              </div>
-            ))}
+                  )
+              )}
+            </div>
           </div>
 
           <div className="panel h-[75vh] my-auto w-[96vw] pr-[4vw]   flex-shrink-0 ">

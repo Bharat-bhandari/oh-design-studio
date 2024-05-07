@@ -27,7 +27,7 @@ const HomePortfolio = () => {
 
   const [portfolioData, setPortfolioData] = useState<Portfolios>([]);
 
-  console.log("gfdhjs", portfolioData);
+  // console.log("gfdhjs", portfolioData);
 
   useEffect(() => {
     const fetchData = async () => {
