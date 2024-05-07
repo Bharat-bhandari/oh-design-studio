@@ -4,9 +4,6 @@ import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 import Image from "next/image";
 
-import image2 from "@/assets/portfolio/04.jpg";
-import { portfolioType } from "@/lib/keystatic";
-
 type PortfolioEntry = {
   title: string;
   client_name: string;
