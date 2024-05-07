@@ -122,7 +122,7 @@ const HomeAboutUs2: React.FC = () => {
               >
                 {item.headerText}
               </div>
-              <div className="text-sm">0{item.id}</div>
+              <div className="text-sm aboutUsText2">0{item.id}</div>
               <div
                 ref={(el) => {
                   linesRef.current[index] = el;
@@ -134,7 +134,7 @@ const HomeAboutUs2: React.FC = () => {
               ref={(el) => {
                 headingsRef.current[index] = el;
               }}
-              className="md:text-4xl text-3xl lg:text-5xl font-semibold opacity-60 cursor-pointer"
+              className="md:text-4xl text-3xl lg:text-5xl font-semibold opacity-60 cursor-pointer aboutUsText2"
             >
               {item.heading}
             </div>

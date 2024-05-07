@@ -101,6 +101,37 @@ const LandingPage = () => {
       // Draggable Part
       // Scrolling
 
+      // Extra Animation
+      gsap.from(".aboutUsText", {
+        yPercent: 16,
+        opacity: 0,
+        stagger: 0.2,
+        font: "2rem",
+        scrollTrigger: {
+          containerAnimation: scrollTween,
+          trigger: ".aboutUsText",
+          start: "top-=125% top",
+          end: "top-=25% top",
+          scrub: 1,
+        },
+      });
+
+      gsap.from(".aboutUsText2", {
+        yPercent: 80,
+        opacity: 0,
+        stagger: 0.2,
+        font: "2rem",
+        scrollTrigger: {
+          containerAnimation: scrollTween,
+          trigger: ".aboutUsText2",
+          start: "top-=8000% top",
+          end: "top-=3000% top",
+          scrub: 1,
+        },
+      });
+
+      // Extra Animation
+
       // Your other GSAP animations
 
       const screenWidth = window.innerWidth;
