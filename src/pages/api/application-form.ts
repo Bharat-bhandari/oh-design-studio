@@ -1,6 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { transporter, mailOptions } from "@/config/nodemailer";
 import type { NextApiRequest, NextApiResponse } from "next";
 const multer = require("multer");
+const fs = require("fs");
 
 type FormData = {
   resume: File | string;
@@ -30,12 +32,8 @@ export default async function handler(
       // Parse form data using multer
       upload.single("resume")(req, res, async (err: any) => {
         if (err instanceof multer.MulterError) {
-          // A Multer error occurred when uploading
-          console.error("Multer error:", err);
           return res.status(500).json({ error: "File upload error" });
         } else if (err) {
-          // An unknown error occurred when uploading
-          console.error("Unknown error:", err);
           return res.status(500).json({ error: "Unknown error" });
         }
 
@@ -43,12 +41,67 @@ export default async function handler(
         const formData: FormData = req.body;
         const resumeFile = req.file;
 
+        const { originalname, path } = resumeFile;
+        const parts = originalname.split(".");
+        const ext = parts[parts.length - 1];
+        const newPath = path + "." + ext;
+        fs.renameSync(path, newPath);
+
         // Process form data as needed
         console.log("Form data:", formData);
         console.log("Resume file:", resumeFile);
 
-        // Send response
-        res.status(200).json({ message: "Form data received successfully" });
+        try {
+          const htmlContent = `
+            <p><strong>Name:</strong> ${formData.fullName}</p>
+            <p><strong>Email:</strong> ${formData.email}</p>
+            <p><strong>Phone:</strong> ${formData.phone}</p>
+            ${
+              formData.currentCompany
+                ? `<p><strong>Current Company:</strong> ${formData.currentCompany}</p>`
+                : ""
+            }
+            ${
+              formData.portfolioURL
+                ? `<p><strong>Portfolio URL:</strong> ${formData.portfolioURL}</p>`
+                : ""
+            }
+            ${
+              formData.linkedin
+                ? `<p><strong>LinkedIn:</strong> ${formData.linkedin}</p>`
+                : ""
+            }
+            ${
+              formData.otherWebsite
+                ? `<p><strong>Other Website:</strong> ${formData.otherWebsite}</p>`
+                : ""
+            }
+            ${
+              formData.additionalInfo
+                ? `<p><strong>Additional Info:</strong> ${formData.additionalInfo}</p>`
+                : ""
+            }
+          `;
+
+          await transporter.sendMail({
+            ...mailOptions,
+            subject: `${formData.fullName} has submitted an application`,
+            html: htmlContent,
+            attachments: [
+              {
+                filename: originalname,
+                path: newPath,
+              },
+            ],
+          });
+
+          fs.unlinkSync(newPath);
+
+          res.status(200).json({ message: "Form data received successfully" });
+        } catch (error) {
+          console.error(error);
+          res.status(400).json({ message: "Error while sending mail" });
+        }
       });
     } catch (error) {
       console.error("Error:", error);

@@ -50,7 +50,7 @@ const FormPage: React.FC = () => {
 
   const validatePhoneNumber = (phone: string): boolean => {
     // Regular expression to match a valid Indian phone number
-    const phoneRegex = /^\+?[91]?[789]\d{9}$/;
+    const phoneRegex = /^\+?[91]?[6789]\d{9}$/;
     return phoneRegex.test(phone);
   };
 
