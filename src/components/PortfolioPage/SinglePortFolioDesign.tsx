@@ -18,15 +18,21 @@ interface Params {
   [key: string]: string;
 }
 
+type PortfolioImage = {
+  image: string;
+  width: number;
+  height: number;
+};
+
 type PortfolioEntry = {
   title: string;
   client_name: string;
   headline1: string;
   headline2: string;
-  portfolio_category: string;
+  portfolio_category: string[];
   description: string;
   project_bg_image: string;
-  portfolio_images: (string | null)[];
+  portfolio_images: PortfolioImage[];
 };
 
 import {
@@ -39,20 +45,6 @@ import {
 import { LiaCopyright } from "react-icons/lia";
 
 import Image from "next/image";
-
-const images = [
-  { src: require("@/assets/portfolio/01.jpg"), alt: "Image 1" },
-  { src: require("@/assets/portfolio/02.jpg"), alt: "Image 2" },
-  { src: require("@/assets/portfolio/03.jpg"), alt: "Image 3" },
-  { src: require("@/assets/portfolio/04.jpg"), alt: "Image 4" },
-  { src: require("@/assets/portfolio/05.jpg"), alt: "Image 5" },
-  { src: require("@/assets/portfolio/06.jpg"), alt: "Image 6" },
-  { src: require("@/assets/portfolio/07.jpg"), alt: "Image 7" },
-  { src: require("@/assets/portfolio/08.jpg"), alt: "Image 8" },
-  { src: require("@/assets/portfolio/09.jpg"), alt: "Image 9" },
-  { src: require("@/assets/portfolio/10.jpg"), alt: "Image 10" },
-  // Add more images as needed
-];
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
@@ -122,6 +114,8 @@ const SinglePortFolioDesign = () => {
         maxWidth = 0;
         sections.forEach((section) => {
           maxWidth += section.offsetWidth;
+          console.log(section);
+          console.log(section.offsetWidth);
         });
       };
 
@@ -246,25 +240,30 @@ const SinglePortFolioDesign = () => {
 
           {singlePortfolio?.portfolio_images
             .filter((image) => image !== null)
-            .map((image, index) => (
-              <div
-                key={index}
-                className="panel h-[75vh] w-fit my-auto flex-shrink-0"
-              >
-                {image && (
-                  <Image
-                    src={image}
-                    alt="portfolio image"
-                    width={1000}
-                    height={1000}
-                    // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="h-full w-fit"
-                    priority={true}
-                  />
-                )}
-              </div>
-            ))}
-          <div className="panel h-[75vh] my-auto w-[20vw] flex-shrink-0 flex justify-center items-end">
+            .map((image, index) => {
+              const newHeight = (75 * window.innerHeight) / 100;
+              const newWidth = (newHeight * image.width) / image.height;
+
+              return (
+                <div
+                  key={index}
+                  className=" h-[75vh] w-fit my-auto flex-shrink-0"
+                >
+                  {image && (
+                    <Image
+                      src={image.image}
+                      alt="portfolio image"
+                      width={newWidth} // Dynamically set width
+                      height={1000}
+                      className={`h-full panel w-[${newWidth}px]`}
+                      priority={true}
+                    />
+                  )}
+                </div>
+              );
+            })}
+
+          <div className="panel h-[75vh] my-auto w-[28rem] flex-shrink-0 flex justify-center items-end">
             <div className="h-60 flex flex-col justify-between">
               <div className="text-lg w-48">
                 402, Makani Center, 35th Linking Road, Bandra(W), 400050.

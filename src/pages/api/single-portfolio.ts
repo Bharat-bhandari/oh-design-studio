@@ -1,15 +1,21 @@
 import reader from "@/lib/keystatic";
 import { NextApiRequest, NextApiResponse } from "next";
 
+type PortfolioImage = {
+  image: string | null;
+  width: number;
+  height: number;
+};
+
 type PortfolioEntry = {
   title: string;
   client_name: string;
   headline1: string;
   headline2: string;
-  portfolio_category: string;
+  portfolio_category: string[];
   description: string;
   project_bg_image: string;
-  portfolio_images: (string | null)[];
+  portfolio_images: PortfolioImage[];
 };
 
 type PortfolioData = {
@@ -31,11 +37,12 @@ export default async function handler(
     const singlePortfolioData = await reader.collections.portfolios.read(slug);
 
     if (singlePortfolioData) {
-      const filteredSinglePortfolioData = {
+      const filteredSinglePortfolioData: PortfolioEntry | { error: string } = {
         ...singlePortfolioData,
         portfolio_images: singlePortfolioData.portfolio_images.filter(
           (image) => image !== null
         ),
+        portfolio_category: singlePortfolioData.portfolio_category.slice(), // Convert to mutable array
       };
 
       res.status(200).json(filteredSinglePortfolioData);

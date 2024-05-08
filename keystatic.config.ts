@@ -66,9 +66,14 @@ export default config({
           label: "Headline 2",
           validation: { isRequired: true },
         }),
-        portfolio_category: fields.text({
+        portfolio_category: fields.multiselect({
           label: "Portfolio Category",
-          validation: { isRequired: true },
+          options: [
+            { label: "Print", value: "print" },
+            { label: "Digital", value: "digital" },
+            { label: "Packaging", value: "packaging" },
+            { label: "Environmental", value: "environmental" },
+          ],
         }),
         description: fields.text({
           label: "Description",
@@ -81,10 +86,23 @@ export default config({
           validation: { isRequired: true },
         }),
         portfolio_images: fields.array(
-          fields.image({
-            label: "Image",
-            directory: "/public/images/singlePortfolio/",
-            publicPath: "/images/singlePortfolio/",
+          fields.object({
+            image: fields.image({
+              label: "Image",
+              directory: "/public/images/singlePortfolio/",
+              publicPath: "/images/singlePortfolio/",
+            }),
+
+            width: fields.integer({
+              label: "Width of Image",
+              description: "Add Image width in px",
+              validation: { min: 0, isRequired: true },
+            }),
+            height: fields.integer({
+              label: "Height of Image",
+              description: "Add Image height in px",
+              validation: { min: 0, isRequired: true },
+            }),
           }),
           {
             label: "Portfolio Images",
