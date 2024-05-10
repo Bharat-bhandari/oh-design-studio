@@ -5,7 +5,7 @@ import aboutImg from "@/assets/home/about1.png";
 
 const AboutUsSection1 = () => {
   return (
-    <div className="px-[6.5vw] h-full flex justify-between">
+    <div className="px-[6.5vw] bg-yellowBg h-full  ml-[4vw] flex justify-between">
       <div className="pt-[9.5vh] pb-[10vh] flex flex-col justify-between">
         <div className="text-textGray text-6xl font-semibold">
           We help organizations transform their

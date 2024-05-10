@@ -32,7 +32,13 @@ const HomePortfolio = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/portfolio");
+        const response = await fetch("/api/portfolio", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ slug: "all" }),
+        });
         const data = await response.json();
         setPortfolioData(data);
       } catch (error) {

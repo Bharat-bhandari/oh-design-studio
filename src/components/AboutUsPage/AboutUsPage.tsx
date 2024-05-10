@@ -14,17 +14,21 @@ import HomeClients from "../LandingPage/HomeClients";
 import HomeAboutUs2 from "../LandingPage/HomeAboutUs2";
 import AboutUsSection1 from "./AboutUsSection1";
 import AboutUsSection3 from "./AboutUsSection3";
+import { Draggable } from "gsap/dist/Draggable";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
+gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
 const AboutUsPage = () => {
   const container = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname();
+  console.log(pathname);
 
   const { timeline } = useContext(TransitionContext);
 
   const { setPreviousRoute } = useContext(TransitionContext);
+
+  let maxWidth = 0;
 
   useGSAP(
     () => {
@@ -33,26 +37,53 @@ const AboutUsPage = () => {
       const amountToScroll = 100 * (sections.length - 1);
       const scrollSpeed = sections.length * 1000;
 
-      gsap.to(sections, {
-        xPercent: -amountToScroll, // amount to scroll
+      const getMaxWidth = () => {
+        maxWidth = 0;
+        sections.forEach((section) => {
+          maxWidth += section.offsetWidth;
+        });
+      };
+
+      getMaxWidth();
+      ScrollTrigger.addEventListener("refreshInit", getMaxWidth);
+
+      let scrollTween = gsap.to(sections, {
+        x: () => `-${maxWidth - window.innerWidth}`,
+        // xPercent: -amountToScroll, // amount to scroll
         ease: "none",
-        scrollTrigger: {
-          trigger: container.current,
-          pin: true,
-          // snap: 1 / (sections.length - 1),
-          start: "center center",
-          scrub: 1,
-          end: () => {
-            return `+=${scrollSpeed}`;
-          },
-          // markers: {
-          //   startColor: "purple",
-          //   endColor: "fuchsia",
-          //   fontSize: "2rem",
-          //   indent: 200,
-          // },
+      });
+
+      let horizontalScroll = ScrollTrigger.create({
+        animation: scrollTween,
+        trigger: container.current,
+        pin: true,
+        // snap: 1 / (sections.length - 1),
+        start: "center center",
+        scrub: 2,
+        end: () => `+=${maxWidth}`,
+        invalidateOnRefresh: true,
+      });
+
+      // Draggable Part
+
+      var dragRatio = maxWidth / (maxWidth - window.innerWidth);
+
+      Draggable.create(".drag-proxy", {
+        trigger: container.current,
+        type: "x",
+        allowContextMenu: true,
+        onPress() {
+          this.startScroll = horizontalScroll.scroll();
+        },
+        onDrag() {
+          horizontalScroll.scroll(
+            this.startScroll - (this.x - this.startX) * dragRatio
+          );
         },
       });
+
+      // Draggable Part
+      // Scrolling
 
       const screenWidth = window.innerWidth;
 
@@ -98,8 +129,8 @@ const AboutUsPage = () => {
   return (
     <>
       <div ref={container} id="mainContainer" className="invisible">
-        <div className="flex h-screen hello ">
-          <div className="bg-yellowBg panel h-[75vh] my-auto  w-[96vw] ml-[4vw] flex-shrink-0 ">
+        <div className="flex h-screen hello cursor-default ">
+          <div className="panel h-[75vh] w-[96vw] my-auto flex-shrink-0 ">
             <AboutUsSection1 />
           </div>
           <div className="bg-yellowBg panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
@@ -111,9 +142,10 @@ const AboutUsPage = () => {
           <div className=" panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
             <HomeClients />
           </div>
-          <div className="panel h-[75vh] my-auto w-[96vw] pr-[4vw]   flex-shrink-0 ">
+          <div className="panel h-[75vh] my-auto w-[96vw] pr-[4vw] flex-shrink-0 ">
             <HomeFooter />
           </div>
+          <div className="drag-proxy invisible absolute"></div>
         </div>
       </div>
     </>

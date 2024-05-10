@@ -35,6 +35,8 @@ const LandingPage = () => {
   const { previousRoute } = useContext(TransitionContext);
   const { setPreviousRoute } = useContext(TransitionContext);
 
+  console.log(previousRoute);
+
   useGSAP(
     () => {
       // Scrolling
@@ -55,9 +57,8 @@ const LandingPage = () => {
       ScrollTrigger.addEventListener("refreshInit", getMaxWidth);
 
       let scrollTween = gsap.to(sections, {
-        // xPercent: () => `-${maxWidth - window.innerWidth}`,
-        xPercent: -amountToScroll, // amount to scroll
-
+        x: () => `-${maxWidth - window.innerWidth}`,
+        // xPercent: -amountToScroll, // amount to scroll
         ease: "none",
       });
 
@@ -70,12 +71,6 @@ const LandingPage = () => {
         scrub: 2,
         end: () => `+=${maxWidth}`,
         invalidateOnRefresh: true,
-        // markers: {
-        //   startColor: "purple",
-        //   endColor: "fuchsia",
-        //   fontSize: "2rem",
-        //   indent: 200,
-        // },
       });
 
       // Draggable Part
