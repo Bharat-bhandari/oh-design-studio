@@ -1,86 +1,98 @@
-import { useMemo, useRef, useContext, useEffect, useState } from "react";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { Draggable } from "gsap/dist/Draggable";
+"use client";
+
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import HomeFooter from "../LandingPage/HomeFooter";
-import { TransitionContext } from "@/context/TransitionContext";
 
-type PortfolioEntry = {
+import { usePathname } from "next/navigation";
+
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { useContext, useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { TransitionContext } from "@/context/TransitionContext";
+import HomeFooter from "../LandingPage/HomeFooter";
+import Image from "next/image";
+
+import { Draggable } from "gsap/dist/Draggable";
+import { useRouter } from "next/router";
+
+interface PortfolioImage {
+  image: string | null;
+  width: number;
+  height: number;
+}
+
+interface PortfolioEntry {
   title: string;
   client_name: string;
   headline1: string;
   headline2: string;
-  portfolio_category: string;
+  portfolio_category: ("print" | "digital" | "packaging" | "environmental")[];
   description: string;
   project_bg_image: string;
-};
+  portfolio_images: PortfolioImage[];
+}
 
-type PortfolioData = {
+interface PortfolioData {
   slug: string;
   entry: PortfolioEntry;
-};
+}
 
-type Portfolios = PortfolioData[];
+interface PortfolioProps {
+  data: PortfolioData[];
+}
 
-gsap.registerPlugin(ScrollTrigger, Draggable);
+gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
-const Portfolio = () => {
+const Portfolio: React.FC<PortfolioProps> = ({ data }) => {
   const container = useRef<HTMLDivElement>(null);
-  const { timeline, setPreviousRoute } = useContext(TransitionContext);
+
   const pathname = usePathname();
 
-  const [portfolioData, setPortfolioData] = useState<Portfolios>([]);
+  const { timeline } = useContext(TransitionContext);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/portfolio");
-        const data = await response.json();
-        setPortfolioData(data);
-      } catch (error) {
-        console.error("Error fetching carousel data:", error);
-      }
-    };
+  const { setPreviousRoute } = useContext(TransitionContext);
 
-    fetchData();
-  }, []);
+  let maxWidth = 0;
 
   useGSAP(
     () => {
-      // Scroll and drag handling logic
       const sections: HTMLDivElement[] = gsap.utils.toArray(".panel");
 
-      let maxWidth = 0;
+      const amountToScroll = 100 * (sections.length - 1);
+      const scrollSpeed = sections.length * 1000;
+
       const getMaxWidth = () => {
-        maxWidth = sections.reduce(
-          (acc, section) => acc + section.offsetWidth,
-          0
-        );
+        maxWidth = 0;
+        sections.forEach((section) => {
+          maxWidth += section.offsetWidth;
+        });
       };
 
       getMaxWidth();
       ScrollTrigger.addEventListener("refreshInit", getMaxWidth);
 
-      const scrollTween = gsap.to(sections, {
+      let scrollTween = gsap.to(sections, {
         x: () => `-${maxWidth - window.innerWidth}`,
+
         ease: "none",
       });
 
-      const horizontalScroll = ScrollTrigger.create({
+      let horizontalScroll = ScrollTrigger.create({
         animation: scrollTween,
         trigger: container.current,
         pin: true,
+        // snap: 1 / (sections.length - 1),
         start: "center center",
         scrub: 2,
         end: () => `+=${maxWidth}`,
         invalidateOnRefresh: true,
       });
 
-      const dragRatio = maxWidth / (maxWidth - window.innerWidth);
+      // Draggable Part
+
+      var dragRatio = maxWidth / (maxWidth - window.innerWidth);
+
+      console.log("ratio", dragRatio);
 
       Draggable.create(".drag-proxy", {
         trigger: container.current,
@@ -284,107 +296,98 @@ const Portfolio = () => {
         });
       };
     },
-    { scope: container, dependencies: [portfolioData] }
-  );
-
-  const renderEvenPortfolioItems = useMemo(
-    () =>
-      portfolioData.map(
-        (item, index) =>
-          index % 2 === 0 && (
-            <div
-              key={index}
-              className=" w-[32vw] boxes z-50 h-full relative overflow-hidden cursor-pointer"
-            >
-              <Image
-                src={item.entry.project_bg_image}
-                width={500}
-                height={500}
-                alt="ima"
-                className="h-full w-full"
-              />
-              <Link href={`/portfolios/${item.slug}`}>
-                <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-[#f2f3f2] text-white z-10"></div>
-                <div className="textOverlay absolute inset-0 w-full h-full flex flex-col justify-center items-center text-[#534e50] left-[100%] z-20 text-4xl ">
-                  <div className=" text-sm font-semibold mb-2 text-[#191718]">
-                    {item.entry.client_name}
-                  </div>
-                  <div className=" text-3xl font-semibold ">
-                    {item.entry.headline1}
-                  </div>
-                  <div className=" text-3xl font-semibold mb-[1.5vh] ">
-                    {item.entry.headline2}
-                  </div>
-
-                  <div className="text-sm font-semibold mt-6">
-                    {item.entry.portfolio_category}
-                  </div>
-                </div>
-              </Link>
-            </div>
-          )
-      ),
-    [portfolioData]
-  );
-
-  const renderOddPortfolioItems = useMemo(
-    () =>
-      portfolioData.map(
-        (item, index) =>
-          index % 2 !== 0 && (
-            <div
-              key={index}
-              className=" w-[32vw] boxes z-50 h-full relative overflow-hidden cursor-pointer"
-            >
-              <Image
-                src={item.entry.project_bg_image}
-                width={500}
-                height={500}
-                alt="ima"
-                className="h-full w-full"
-              />
-              <Link href={`/portfolios/${item.slug}`}>
-                <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-[#f2f3f2] text-white z-10"></div>
-                <div className="textOverlay absolute inset-0 w-full h-full flex flex-col justify-center items-center text-[#534e50] left-[100%] z-20 text-4xl ">
-                  <div className=" text-sm font-semibold mb-2 text-[#191718]">
-                    {item.entry.client_name}
-                  </div>
-                  <div className=" text-3xl font-semibold ">
-                    {item.entry.headline1}
-                  </div>
-                  <div className=" text-3xl font-semibold mb-[1.5vh] ">
-                    {item.entry.headline2}
-                  </div>
-
-                  <div className="text-sm font-semibold mt-6">
-                    {item.entry.portfolio_category}
-                  </div>
-                </div>
-              </Link>
-            </div>
-          )
-      ),
-    [portfolioData]
+    { scope: container }
   );
 
   return (
-    <div ref={container} id="mainContainer" className="invisible">
-      <div className="flex h-screen hello cursor-default ">
-        <div className="panel h-[75vh] w-auto flex my-auto flex-col">
-          {/* <HomePortfolio /> */}
-          <div className="flex flex-row h-[50%] ml-[4vw]">
-            {renderEvenPortfolioItems}
+    <>
+      <div ref={container} id="mainContainer" className="invisible">
+        <div className="flex h-screen hello cursor-default ">
+          <div className="panel h-[75vh] w-auto flex my-auto flex-col  ">
+            {/* <HomePortfolio /> */}
+            <div className=" flex flex-row h-[50%] ml-[4vw]">
+              {data.map(
+                (item, index) =>
+                  index % 2 === 0 && (
+                    <div
+                      key={index}
+                      className=" w-[32vw] boxes z-50 h-full relative overflow-hidden cursor-pointer"
+                    >
+                      <Image
+                        src={item.entry.project_bg_image}
+                        width={500}
+                        height={500}
+                        alt="ima"
+                        className="h-full w-full"
+                      />
+                      <Link href={`/portfolios/${item.slug}`}>
+                        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-[#f2f3f2] text-white z-10"></div>
+                        <div className="textOverlay absolute inset-0 w-full h-full flex flex-col justify-center items-center text-[#534e50] left-[100%] z-20 text-4xl ">
+                          <div className=" text-sm font-semibold mb-2 text-[#191718]">
+                            {item.entry.client_name}
+                          </div>
+                          <div className=" text-3xl font-semibold ">
+                            {item.entry.headline1}
+                          </div>
+                          <div className=" text-3xl font-semibold mb-[1.5vh] ">
+                            {item.entry.headline2}
+                          </div>
+
+                          <div className="text-sm font-semibold mt-6">
+                            {item.entry.portfolio_category}
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  )
+              )}
+            </div>
+            <div className="flex flex-row h-[50%] ml-[4vw]">
+              {data.map(
+                (item, index) =>
+                  index % 2 !== 0 && (
+                    <div
+                      key={index}
+                      className=" w-[32vw] boxes z-50 h-full relative overflow-hidden cursor-pointer"
+                    >
+                      <Image
+                        src={item.entry.project_bg_image}
+                        width={500}
+                        height={500}
+                        alt="ima"
+                        className="h-full w-full"
+                      />
+                      <Link href={`/portfolios/${item.slug}`}>
+                        <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-[#f2f3f2] text-white z-10"></div>
+                        <div className="textOverlay absolute inset-0 w-full h-full flex flex-col justify-center items-center text-[#534e50] left-[100%] z-20 text-4xl ">
+                          <div className=" text-sm font-semibold mb-2 text-[#191718]">
+                            {item.entry.client_name}
+                          </div>
+                          <div className=" text-3xl font-semibold ">
+                            {item.entry.headline1}
+                          </div>
+                          <div className=" text-3xl font-semibold mb-[1.5vh] ">
+                            {item.entry.headline2}
+                          </div>
+
+                          <div className="text-sm font-semibold mt-6">
+                            {item.entry.portfolio_category}
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  )
+              )}
+            </div>
           </div>
-          <div className="flex flex-row h-[50%] ml-[4vw]">
-            {renderOddPortfolioItems}
+
+          <div className="panel h-[75vh] my-auto w-[96vw] pr-[4vw]   flex-shrink-0 ">
+            <HomeFooter />
           </div>
+          <div className="drag-proxy invisible absolute"></div>
         </div>
-        <div className="panel h-[75vh] my-auto w-[96vw] pr-[4vw]   flex-shrink-0 ">
-          <HomeFooter />
-        </div>
-        <div className="drag-proxy invisible absolute"></div>
       </div>
-    </div>
+    </>
   );
 };
 

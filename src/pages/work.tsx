@@ -1,12 +1,12 @@
-import Nav from "@/components/LandingPage/Nav";
 import Portfolio from "@/components/PortfolioPage/Portfolio";
+import PortfolioNav from "@/components/PortfolioPage/PortfolioNav";
 import React from "react";
 
 const Work = () => {
   return (
     <>
-      <Nav />
-      <Portfolio />
+      <PortfolioNav />
+      {/* <Portfolio /> */}
     </>
   );
 };

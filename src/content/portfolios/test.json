@@ -1,9 +1,9 @@
 {
-  "title": "Logo",
-  "client_name": "Logo",
+  "title": "test",
+  "client_name": "Test",
   "headline1": "Test",
   "headline2": "Test",
-  "portfolio_category": ["packaging"],
+  "portfolio_category": ["print"],
   "description": "Test",
   "project_bg_image": "/images/portfolios/logo/project_bg_image.jpg",
   "portfolio_images": [

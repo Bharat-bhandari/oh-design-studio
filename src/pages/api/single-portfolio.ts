@@ -12,7 +12,7 @@ type PortfolioEntry = {
   client_name: string;
   headline1: string;
   headline2: string;
-  portfolio_category: string[];
+  portfolio_category: ("print" | "digital" | "packaging" | "environmental")[];
   description: string;
   project_bg_image: string;
   portfolio_images: PortfolioImage[];

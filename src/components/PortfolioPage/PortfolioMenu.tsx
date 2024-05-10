@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useContext, useRef } from "react";
 
-const MainMenu = () => {
+const PortfolioMenu = () => {
   const container = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname();
@@ -59,66 +59,66 @@ const MainMenu = () => {
         <div className=" my-auto text-3xl w-full flex text-white panel h-[75vh] flex-col items-center">
           <div className="justify-between flex flex-col h-full overflow-hidden">
             <Link
-              href="/about-us"
+              href="/portfolios/all"
               scroll={false}
               className=" w-fit text-[13.5vh] leading-none font-semibold text-black us px-2 relative no-underline"
               onMouseEnter={() => onMouseEnter("us")}
               onMouseLeave={() => onMouseLeave("us")}
             >
               <div className="w-fit">
-                Us.
+                All.
                 <div className="bg-yellowMenu absolute w-full  h-full top-0 left-0 -z-10 overlay"></div>
               </div>
             </Link>
 
             <Link
-              href="/portfolios/all"
+              href="/portfolios/print"
               scroll={false}
               className=" text-[13.5vh] leading-none  w-fit font-semibold text-black px-2 work relative no-underline"
               onMouseEnter={() => onMouseEnter("work")}
               onMouseLeave={() => onMouseLeave("work")}
             >
               <div className="w-fit">
-                Work.
+                Print.
                 <div className="bg-yellowMenu absolute w-full  h-full top-0 left-0 -z-10 overlay"></div>
               </div>
             </Link>
 
             <Link
-              href="/thoughts"
+              href="/portfolios/digital"
               scroll={false}
               className=" text-[13.5vh] leading-none  w-fit font-semibold thoughts text-black px-2 relative no-underline"
               onMouseEnter={() => onMouseEnter("thoughts")}
               onMouseLeave={() => onMouseLeave("thoughts")}
             >
               <div className="w-fit">
-                Thoughts.
+                Digital.
                 <div className="bg-yellowMenu absolute w-full  h-full top-0 left-0 -z-10 overlay"></div>
               </div>
             </Link>
 
             <Link
-              href="/career"
+              href="/portfolios/packaging"
               scroll={false}
               className=" text-[13.5vh] leading-none  w-fit font-semibold career text-black px-2 relative no-underline"
               onMouseEnter={() => onMouseEnter("career")}
               onMouseLeave={() => onMouseLeave("career")}
             >
               <div className="w-fit">
-                Careers.
+                Packaging.
                 <div className="bg-yellowMenu absolute w-full  h-full top-0 left-0 -z-10 overlay"></div>
               </div>
             </Link>
 
             <Link
-              href="/contact"
+              href="/portfolios/environmental"
               scroll={false}
               className=" text-[13.5vh] leading-none  w-fit font-semibold contact text-black px-2 relative no-underline"
               onMouseEnter={() => onMouseEnter("contact")}
               onMouseLeave={() => onMouseLeave("contact")}
             >
               <div className="w-fit">
-                Contact.
+                Environmental.
                 <div className="bg-yellowMenu absolute w-full  h-full top-0 left-0 -z-10 overlay"></div>
               </div>
             </Link>
@@ -129,4 +129,4 @@ const MainMenu = () => {
   );
 };
 
-export default MainMenu;
+export default PortfolioMenu;
