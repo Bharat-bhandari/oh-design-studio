@@ -7,33 +7,35 @@ import { usePathname } from "next/navigation";
 
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useContext, useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { TransitionContext } from "@/context/TransitionContext";
 
 import { Draggable } from "gsap/dist/Draggable";
 
-import { useParams } from "next/navigation";
-
-interface Params {
-  [key: string]: string;
-}
-
-type PortfolioImage = {
-  image: string;
+interface PortfolioImage {
+  image: string | null;
   width: number;
   height: number;
-};
+}
 
-type PortfolioEntry = {
+interface PortfolioEntry {
   title: string;
   client_name: string;
   headline1: string;
   headline2: string;
-  portfolio_category: string[];
+  portfolio_category: ("print" | "digital" | "packaging" | "environmental")[];
   description: string;
   project_bg_image: string;
   portfolio_images: PortfolioImage[];
-};
+}
+
+interface PortfolioData {
+  slug: string;
+  entry: PortfolioEntry;
+}
+
+interface WorkProps {
+  data: PortfolioEntry;
+}
 
 import {
   FaBehance,
@@ -48,48 +50,28 @@ import Image from "next/image";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
-const SinglePortFolioDesign = () => {
-  // Get the Data
+const SinglePortFolioDesign: React.FC<WorkProps> = ({ data }) => {
+  // get WindowHeight
 
-  const params = useParams<Params>();
-  const [slug, setSlug] = useState<string>("");
-
-  useEffect(() => {
-    if (params?.slug) {
-      setSlug(params.slug);
-    }
-  }, [params]);
-
-  console.log(slug);
-
-  const [singlePortfolio, setSinglePortfolio] = useState<PortfolioEntry | null>(
-    null
-  );
-
-  console.log("value==", singlePortfolio);
+  const [windowHeight, setWindowHeight] = useState<number>(0);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (slug.trim() !== "") {
-        // Check if slug is not empty or whitespace
-        try {
-          const response = await fetch("/api/single-portfolio", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ slug: slug }),
-          });
-          const data = await response.json();
-          setSinglePortfolio(data);
-        } catch (error) {
-          console.error("Error fetching portfolio data:", error);
-        }
-      }
+    // Function to update windowHeight state with current innerHeight
+    const handleResize = () => {
+      setWindowHeight(window.innerHeight);
     };
 
-    fetchData();
-  }, [slug]);
+    // Set initial window height
+    handleResize();
+
+    // Event listener to update windowHeight state on window resize
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup function to remove event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   // Gsap Animation ----------------------------------
   const container = useRef<HTMLDivElement>(null);
@@ -108,22 +90,12 @@ const SinglePortFolioDesign = () => {
 
       const sections: HTMLDivElement[] = gsap.utils.toArray(".panel");
 
-      const amountToScroll = 100 * (sections.length - 1);
-
       const getMaxWidth = () => {
         maxWidth = 0;
         sections.forEach((section) => {
           maxWidth += section.offsetWidth;
-          console.log(section);
-          console.log(section.offsetWidth);
         });
       };
-
-      // let scrollWidth: number = maxWidth;
-
-      // if (container.current) {
-      //   scrollWidth = container.current.scrollWidth;
-      // }
 
       getMaxWidth();
       ScrollTrigger.addEventListener("refreshInit", getMaxWidth);
@@ -143,19 +115,11 @@ const SinglePortFolioDesign = () => {
         scrub: 2,
         end: () => `+=${maxWidth}`,
         invalidateOnRefresh: true,
-        // markers: {
-        //   startColor: "purple",
-        //   endColor: "fuchsia",
-        //   fontSize: "2rem",
-        //   indent: 200,
-        // },
       });
 
       // Draggable Part
 
       var dragRatio = maxWidth / (maxWidth - window.innerWidth);
-
-      console.log("ratio", dragRatio);
 
       Draggable.create(".drag-proxy", {
         trigger: container.current,
@@ -176,7 +140,7 @@ const SinglePortFolioDesign = () => {
       const tl = gsap.timeline();
 
       const init = () => {
-        if (singlePortfolio !== null) {
+        if (data !== null) {
           tl.fromTo(
             container.current,
             {
@@ -211,7 +175,7 @@ const SinglePortFolioDesign = () => {
         })
       );
     },
-    { scope: container, dependencies: [singlePortfolio] }
+    { scope: container, dependencies: [windowHeight] }
   );
 
   return (
@@ -221,10 +185,10 @@ const SinglePortFolioDesign = () => {
           <div className="panel h-[75vh] my-auto  w-[46vw] bg-yellowBg ml-[4vw] flex-shrink-0 ">
             <div className=" flex flex-col justify-center h-full pl-[18%] pr-[10%]">
               <div className="text-[10vh] font-semibold text-textGray mb-6">
-                {singlePortfolio?.client_name}
+                {data?.client_name}
               </div>
               <div className="mb-6 hidden lg:block text-sm lg:text-base ">
-                {singlePortfolio?.description}
+                {data?.description}
               </div>
               <div className="mb-6  lg:hidden text-sm  ">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum
@@ -238,11 +202,14 @@ const SinglePortFolioDesign = () => {
             </div>
           </div>
 
-          {singlePortfolio?.portfolio_images
+          {data?.portfolio_images
             .filter((image) => image !== null)
             .map((image, index) => {
-              const newHeight = (75 * window.innerHeight) / 100;
+              const newHeight = (75 * windowHeight) / 100;
               const newWidth = (newHeight * image.width) / image.height;
+
+              // Add a null check here
+              if (!image.image) return null;
 
               return (
                 <div

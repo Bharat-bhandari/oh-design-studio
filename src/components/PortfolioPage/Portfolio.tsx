@@ -13,7 +13,6 @@ import HomeFooter from "../LandingPage/HomeFooter";
 import Image from "next/image";
 
 import { Draggable } from "gsap/dist/Draggable";
-import { useRouter } from "next/router";
 
 interface PortfolioImage {
   image: string | null;
@@ -57,9 +56,6 @@ const Portfolio: React.FC<PortfolioProps> = ({ data }) => {
   useGSAP(
     () => {
       const sections: HTMLDivElement[] = gsap.utils.toArray(".panel");
-
-      const amountToScroll = 100 * (sections.length - 1);
-      const scrollSpeed = sections.length * 1000;
 
       const getMaxWidth = () => {
         maxWidth = 0;
@@ -320,7 +316,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ data }) => {
                         alt="ima"
                         className="h-full w-full"
                       />
-                      <Link href={`/portfolios/${item.slug}`}>
+                      <Link href={`/portfolio/${item.slug}`}>
                         <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-[#f2f3f2] text-white z-10"></div>
                         <div className="textOverlay absolute inset-0 w-full h-full flex flex-col justify-center items-center text-[#534e50] left-[100%] z-20 text-4xl ">
                           <div className=" text-sm font-semibold mb-2 text-[#191718]">
@@ -357,7 +353,7 @@ const Portfolio: React.FC<PortfolioProps> = ({ data }) => {
                         alt="ima"
                         className="h-full w-full"
                       />
-                      <Link href={`/portfolios/${item.slug}`}>
+                      <Link href={`/portfolio/${item.slug}`}>
                         <div className="overlay absolute inset-0 w-full h-full left-[100%] bg-[#f2f3f2] text-white z-10"></div>
                         <div className="textOverlay absolute inset-0 w-full h-full flex flex-col justify-center items-center text-[#534e50] left-[100%] z-20 text-4xl ">
                           <div className=" text-sm font-semibold mb-2 text-[#191718]">

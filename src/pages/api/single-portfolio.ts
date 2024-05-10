@@ -32,8 +32,6 @@ export default async function handler(
   try {
     const { slug } = req.body;
 
-    console.log(slug);
-
     const singlePortfolioData = await reader.collections.portfolios.read(slug);
 
     if (singlePortfolioData) {

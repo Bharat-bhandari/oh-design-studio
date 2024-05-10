@@ -8,7 +8,7 @@ const SinglePortfolio = () => {
     <>
       <div className="hidden sm:block">
         <Nav />
-        <SinglePortFolioDesign />
+        {/* <SinglePortFolioDesign /> */}
       </div>
       <div className="sm:hidden">
         <SinglePortFolioDesignMobile />

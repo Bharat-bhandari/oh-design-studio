@@ -1,84 +1,102 @@
-// import React, { useEffect, useState } from "react";
-// import { useParams } from "next/navigation";
-
-// interface Params {
-//   [key: string]: string;
-// }
-
-// type PortfolioEntry = {
-//   title: string;
-//   client_name: string;
-//   headline1: string;
-//   headline2: string;
-//   portfolio_category: string;
-//   description: string;
-//   project_bg_image: string;
-//   portfolio_images: (string | null)[];
-// };
-
-// const PortfolioMain = () => {
-//   const params = useParams<Params>();
-//   const [slug, setSlug] = useState<string>("");
-
-//   useEffect(() => {
-//     if (params?.slug) {
-//       setSlug(params.slug);
-//     }
-//   }, [params]);
-
-//   console.log(slug);
-
-//   const [singlePortfolio, setSinglePortfolio] = useState<PortfolioEntry | null>(
-//     null
-//   );
-
-//   console.log(singlePortfolio);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       if (slug.trim() !== "") {
-//         // Check if slug is not empty or whitespace
-//         try {
-//           const response = await fetch("/api/single-portfolio", {
-//             method: "POST",
-//             headers: {
-//               "Content-Type": "application/json",
-//             },
-//             body: JSON.stringify({ slug: slug }),
-//           });
-//           const data = await response.json();
-//           setSinglePortfolio(data);
-//         } catch (error) {
-//           console.error("Error fetching portfolio data:", error);
-//         }
-//       }
-//     };
-
-//     fetchData();
-//   }, [slug]);
-
-//   return <div>portfolioMain</div>;
-// };
-
-// export default PortfolioMain;
-
 import Nav from "@/components/LandingPage/Nav";
 import SinglePortFolioDesignMobile from "@/components/MobileView/SinglePortFolioDesignMobile";
 import SinglePortFolioDesign from "@/components/PortfolioPage/SinglePortFolioDesign";
 import React from "react";
 
-const SinglePortfolio = () => {
+import { GetStaticPropsContext } from "next";
+
+interface MyContext extends GetStaticPropsContext {
+  params: {
+    slug: string;
+  };
+  locales?: string[];
+  locale?: string;
+  defaultLocale?: string;
+}
+
+interface PortfolioImage {
+  image: string | null;
+  width: number;
+  height: number;
+}
+
+interface PortfolioEntry {
+  title: string;
+  client_name: string;
+  headline1: string;
+  headline2: string;
+  portfolio_category: ("print" | "digital" | "packaging" | "environmental")[];
+  description: string;
+  project_bg_image: string;
+  portfolio_images: PortfolioImage[];
+}
+
+interface PortfolioData {
+  slug: string;
+  entry: PortfolioEntry;
+}
+
+interface WorkProps {
+  data: PortfolioEntry;
+}
+
+const SinglePortfolio: React.FC<WorkProps> = (props) => {
+  const { data } = props;
+
   return (
     <>
       <div className="hidden sm:block">
         <Nav />
-        <SinglePortFolioDesign />
+        <SinglePortFolioDesign data={data} />
       </div>
       <div className="sm:hidden">
         <SinglePortFolioDesignMobile />
       </div>
     </>
   );
+};
+
+export const getStaticPaths = async () => {
+  const id = "all";
+
+  const response = await fetch("http://localhost:3000/api/portfolio", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ slug: id }),
+  });
+
+  const data = await response.json();
+
+  const allPortfolioSlug = data.map((d: PortfolioData) => d.slug);
+
+  console.log(allPortfolioSlug);
+
+  return {
+    paths: allPortfolioSlug.map((slug: string) => ({ params: { slug: slug } })),
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async (context: MyContext) => {
+  const id = context.params.slug;
+
+  const response = await fetch("http://localhost:3000/api/single-portfolio", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ slug: id }),
+  });
+
+  const data = await response.json();
+
+  return {
+    props: {
+      data,
+    },
+  };
 };
 
 export default SinglePortfolio;
