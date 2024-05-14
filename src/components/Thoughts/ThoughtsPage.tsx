@@ -9,16 +9,13 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useContext, useRef } from "react";
 import Link from "next/link";
 import { TransitionContext } from "@/context/TransitionContext";
-import HomeFooter from "../LandingPage/HomeFooter";
-import HomeClients from "../LandingPage/HomeClients";
-import HomeAboutUs2 from "../LandingPage/HomeAboutUs2";
-import AboutUsSection1 from "./AboutUsSection1";
-import AboutUsSection3 from "./AboutUsSection3";
 import { Draggable } from "gsap/dist/Draggable";
+import HomeThoughts from "../LandingPage/HomeThoughts";
+import HomeFooter from "../LandingPage/HomeFooter";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
-const AboutUsPage = () => {
+const ThoughtsPage = () => {
   const container = useRef<HTMLDivElement>(null);
 
   const pathname = usePathname();
@@ -108,11 +105,9 @@ const AboutUsPage = () => {
       setTimeout(() => {
         init();
       }, 0.0001);
-
       if (pathname !== null) {
         setPreviousRoute(pathname);
       }
-
       const totalContentWidth = sections.length * window.innerWidth;
 
       timeline.add(
@@ -129,22 +124,14 @@ const AboutUsPage = () => {
   return (
     <>
       <div ref={container} id="mainContainer" className="invisible">
-        <div className="flex h-screen cursor-default ">
-          <div className="panel h-[75vh] w-[96vw] my-auto flex-shrink-0 ">
-            <AboutUsSection1 />
+        <div className="flex h-screen cursor-default">
+          <div className="panel h-[75vh] my-auto  w-screen flex-shrink-0 ">
+            <HomeThoughts />
           </div>
-          <div className="bg-yellowBg panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
-            <HomeAboutUs2 />
-          </div>
-          <div className="bg-yellowBg panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
-            <AboutUsSection3 />
-          </div>
-          <div className=" panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
-            <HomeClients />
-          </div>
-          <div className="panel h-[75vh] my-auto w-[96vw] pr-[4vw] flex-shrink-0 ">
+          <div className=" panel h-[75vh] my-auto w-[96vw] pr-[4vw] flex-shrink-0 ">
             <HomeFooter />
           </div>
+
           <div className="drag-proxy invisible absolute"></div>
         </div>
       </div>
@@ -152,4 +139,4 @@ const AboutUsPage = () => {
   );
 };
 
-export default AboutUsPage;
+export default ThoughtsPage;

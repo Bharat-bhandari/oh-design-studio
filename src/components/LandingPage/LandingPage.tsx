@@ -20,6 +20,7 @@ import HomeThoughts from "./HomeThoughts";
 import Nav from "./Nav";
 import EmblaCarousel from "../ui/EmblaCarousel";
 import EmblaCarousalDesktop from "../MoreComponents/EmblaCarousalDesktop";
+import HomeMenu from "./HomeMenu";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
@@ -135,6 +136,8 @@ const LandingPage = () => {
 
       const tl = gsap.timeline();
 
+      const portfolioPattern = /^\/portfolio\//;
+
       const init = () => {
         if (previousRoute === "") {
           tl.fromTo(
@@ -195,7 +198,7 @@ const LandingPage = () => {
               },
               { y: 0, opacity: 1 }
             );
-        } else if (previousRoute === "/menu" || previousRoute === "/contact") {
+        } else if (previousRoute === "/menu") {
           setIsLoading(false);
           tl.fromTo(
             container.current,
@@ -210,17 +213,28 @@ const LandingPage = () => {
               ease: "power2.out",
             }
           );
-        } else if (previousRoute === "/portfolio") {
+        } else if (
+          previousRoute === "/portfolios/all" ||
+          previousRoute === "/about-us" ||
+          previousRoute === "/career" ||
+          previousRoute === "/contact" ||
+          previousRoute === "/thoughts" ||
+          portfolioPattern.test(previousRoute)
+        ) {
+          setIsLoading(false);
           tl.fromTo(
             container.current,
             {
-              x: -totalContentWidth,
+              x: -maxWidth,
             },
             {
               x: 0,
+              ease: "power2.out",
+              duration: 2,
             }
           );
         }
+        // else if(portfolioPattern.test(previousRoute))
       };
 
       setTimeout(() => {
@@ -234,8 +248,8 @@ const LandingPage = () => {
 
       timeline.add(
         gsap.to(container.current, {
-          x: totalContentWidth,
-          duration: 0.5,
+          x: maxWidth,
+          duration: 0.6,
           ease: "power2.in",
         })
       );
@@ -265,7 +279,7 @@ const LandingPage = () => {
       <div>
         <div>{!isLoading && <Nav />}</div>
 
-        <div ref={container} id="mainContainer" className="invisible">
+        <div ref={container} id="mainContainer" className="">
           <div className="flex h-screen cursor-default ">
             <div className=" panel h-[75vh] my-auto  w-[96vw] pl-[4vw] flex-shrink-0 ">
               <EmblaCarousalDesktop />
@@ -289,6 +303,9 @@ const LandingPage = () => {
             <div className=" panel h-[75vh] my-auto w-screen  flex-shrink-0 ">
               <HomeThoughts />
             </div>
+            {/* <div className=" panel h-[75vh] my-auto w-screen  flex-shrink-0 ">
+              <HomeMenu />
+            </div> */}
             <div className="panel h-[75vh] my-auto w-[96vw] pr-[4vw]   flex-shrink-0  cursor-default">
               <HomeFooter />
             </div>

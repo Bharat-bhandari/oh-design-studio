@@ -2,49 +2,12 @@ import React, { useEffect, useRef } from "react";
 import about from "@/assets/home/about-us.png";
 import linkBtn from "@/assets/images/linkBtn.png";
 import Image from "next/image";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const HomeAboutUs = () => {
-  const containerRef = useRef(null);
-  // useGSAP(
-  //   () => {
-  //     gsap.from(".test", {
-  //       yPercent: 50,
-  //       duration: 3,
-  //       opacity: 0,
-  //       ease: "none",
-  //       scrollTrigger: {
-  //         trigger: ".test",
-  //         toggleActions: "restart none none none",
-  //         start: "top, center+=30%",
-  //         end: "top, center-=10%",
-  //         scrub: true,
-  //         invalidateOnRefresh: true,
-
-  //         markers: {
-  //           startColor: "purple",
-  //           endColor: "fuchsia",
-  //           fontSize: "2rem",
-  //           indent: 200,
-  //         },
-  //       },
-  //     });
-  //   },
-  //   { scope: containerRef }
-  // );
-
   return (
-    <div
-      className="px-[6.5vw] flex justify-between h-full gap-[5vw]"
-      ref={containerRef}
-    >
+    <div className="px-[6.5vw] flex justify-between h-full gap-[5vw]">
       <div className="pt-[9.5vh] h-[55vh] overflow-hidden flex flex-col justify-between ">
-        <div className="text-textGray text-[4.5vw]  font-semibold aboutUsText ">
+        <div className="text-textGray text-[4vw]  font-semibold aboutUsText ">
           Character is a branding and design agency with studios in New York and
           San Francisco.
         </div>
