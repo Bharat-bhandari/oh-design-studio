@@ -10,14 +10,6 @@ import { IoMdMenu } from "react-icons/io";
 const MobileNav = () => {
   return (
     <div className="relative">
-      <Link scroll={false} href="/">
-        <Image
-          className="fixed top-[5vh] left-[4.5vw] cursor-pointer z-50"
-          src={logo}
-          alt="Logo"
-        />
-      </Link>
-
       <Link scroll={false} href="/menu">
         {/* <Image
           className="fixed top-[8.3vh] right-[6.3vw] cursor-pointer z-50"
