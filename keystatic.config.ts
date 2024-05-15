@@ -3,12 +3,12 @@ import { config, fields, collection } from "@keystatic/core";
 
 export default config({
   storage: {
-    // kind: "github",
-    // repo: {
-    //   owner: "Bharat-bhandari",
-    //   name: "oh-design-studio",
-    // },
-    kind: "local",
+    kind: "github",
+    repo: {
+      owner: "Bharat-bhandari",
+      name: "oh-design-studio",
+    },
+    // kind: "local",
   },
   collections: {
     home_carousel: collection({
