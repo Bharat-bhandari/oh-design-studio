@@ -59,7 +59,9 @@ const SinglePortfolio: React.FC<WorkProps> = (props) => {
 export const getStaticPaths = async () => {
   const id = "all";
 
-  const response = await fetch("http://localhost:3000/api/portfolio", {
+  const apiUrl = process.env.PROD_API_URL || "http://localhost:3000";
+
+  const response = await fetch(`${apiUrl}/api/portfolio`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -82,7 +84,9 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context: MyContext) => {
   const id = context.params.slug;
 
-  const response = await fetch("http://localhost:3000/api/single-portfolio", {
+  const apiUrl = process.env.PROD_API_URL || "http://localhost:3000";
+
+  const response = await fetch(`${apiUrl}/api/single-portfolio`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

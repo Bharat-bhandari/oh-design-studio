@@ -64,7 +64,9 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context: MyContext) => {
   const id = context.params.portfolio;
 
-  const response = await fetch("http://localhost:3000/api/portfolio", {
+  const apiUrl = process.env.PROD_API_URL || "http://localhost:3000";
+
+  const response = await fetch(`${apiUrl}/api/portfolio`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
