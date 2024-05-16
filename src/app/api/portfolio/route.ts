@@ -1,5 +1,5 @@
-import reader, { portfolioType } from "@/lib/keystatic";
-import type { NextApiRequest, NextApiResponse } from "next";
+import reader from "@/lib/keystatic";
+import { NextResponse } from "next/server";
 
 type PortfolioImage = {
   image: string | null;
@@ -27,15 +27,11 @@ type PortfolioData = {
 
 type Portfolios = ReadonlyArray<PortfolioData>;
 
-// Update the handler function
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Portfolios | { error: string }>
-) {
+export const POST = async (req: Request) => {
   try {
-    const { slug } = req.body;
+    const { slug } = await req.json();
 
-    console.log(slug);
+    console.log("hello world", slug);
 
     const portfolioData = await reader.collections.portfolios.all();
 
@@ -52,9 +48,12 @@ export default async function handler(
       }
     });
 
-    res.status(200).json(filteredPortfolioData);
+    return NextResponse.json(filteredPortfolioData);
   } catch (error) {
     console.error("Error fetching carousel data:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
-}
+};
