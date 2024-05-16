@@ -29,26 +29,26 @@ type Portfolios = ReadonlyArray<PortfolioData>;
 
 export const POST = async (req: Request) => {
   try {
-    const { slug } = await req.json();
+    // const { slug } = await req.json();
 
-    console.log("hello world", slug);
+    console.log("hello world");
 
     const portfolioData = await reader.collections.portfolios.all();
 
-    const filteredPortfolioData: Portfolios = portfolioData.filter((item) => {
-      if (
-        slug === "print" ||
-        slug === "digital" ||
-        slug === "packaging" ||
-        slug === "environmental"
-      ) {
-        return item.entry.portfolio_category.includes(slug);
-      } else if (slug === "all") {
-        return true; // Return full data if slug is not one of the specified values
-      }
-    });
+    // const filteredPortfolioData: Portfolios = portfolioData.filter((item) => {
+    //   if (
+    //     slug === "print" ||
+    //     slug === "digital" ||
+    //     slug === "packaging" ||
+    //     slug === "environmental"
+    //   ) {
+    //     return item.entry.portfolio_category.includes(slug);
+    //   } else if (slug === "all") {
+    //     return true; // Return full data if slug is not one of the specified values
+    //   }
+    // });
 
-    return NextResponse.json(filteredPortfolioData);
+    return NextResponse.json(portfolioData);
   } catch (error) {
     console.error("Error fetching carousel data:", error);
     return NextResponse.json(
