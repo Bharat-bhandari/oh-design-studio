@@ -21,33 +21,12 @@ type PortfolioData = {
 };
 
 type Portfolios = PortfolioData[];
+type HomeProps = {
+  portFolioData: PortfolioData[];
+};
 
-const HomePortfolio = () => {
+const HomePortfolio: React.FC<HomeProps> = ({ portFolioData }) => {
   const container = useRef<HTMLDivElement>(null);
-
-  const [portfolioData, setPortfolioData] = useState<Portfolios>([]);
-
-  // console.log("gfdhjs", portfolioData);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/portfolio", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ slug: "all" }),
-        });
-        const data = await response.json();
-        setPortfolioData(data);
-      } catch (error) {
-        console.error("Error fetching carousel data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   useGSAP(
     () => {
@@ -201,12 +180,12 @@ const HomePortfolio = () => {
         });
       };
     },
-    { scope: container, dependencies: [portfolioData] }
+    { scope: container }
   );
 
   return (
     <div ref={container} className="grid grid-cols-3 h-full w-full">
-      {portfolioData.map((item, index) => (
+      {portFolioData.map((item, index) => (
         <div
           key={index}
           className=" boxes z-50 h-[37.5vh] relative overflow-hidden cursor-pointer"

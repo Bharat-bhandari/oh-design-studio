@@ -19,24 +19,12 @@ import {
 } from "@/components/ui/EmblaCarouselDotButton";
 import Image from "next/image";
 
-const EmblaCarousalDesktop = () => {
+type HomeProps = {
+  data: CarouselItem[];
+};
+
+const EmblaCarousalDesktop: React.FC<HomeProps> = ({ data }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel();
-
-  const [carouselData, setCarouselData] = useState<CarouselItem[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/home-carousel");
-        const data = await response.json();
-        setCarouselData(data);
-      } catch (error) {
-        console.error("Error fetching carousel data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
     useDotButton(emblaApi);
@@ -44,7 +32,7 @@ const EmblaCarousalDesktop = () => {
     <div className="embla h-full ">
       <div className="embla__viewport h-full " ref={emblaRef}>
         <div className="embla__container h-full">
-          {carouselData.map((item, index) => (
+          {data.map((item, index) => (
             <div
               key={index}
               className="embla__slide flex justify-center items-center h-full relative"

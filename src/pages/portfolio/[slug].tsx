@@ -4,6 +4,7 @@ import SinglePortFolioDesign from "@/components/PortfolioPage/SinglePortFolioDes
 import React from "react";
 
 import { GetStaticPropsContext } from "next";
+import { reader } from "@/utils/reader";
 
 interface MyContext extends GetStaticPropsContext {
   params: {
@@ -59,19 +60,9 @@ const SinglePortfolio: React.FC<WorkProps> = (props) => {
 export const getStaticPaths = async () => {
   const id = "all";
 
-  const apiUrl = process.env.PROD_API_URL || "http://localhost:3000";
+  const data = await reader.collections.portfolios.all();
 
-  const response = await fetch(`${apiUrl}/api/portfolio`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ slug: id }),
-  });
-
-  const data = await response.json();
-
-  const allPortfolioSlug = data.map((d: PortfolioData) => d.slug);
+  const allPortfolioSlug = data.map((d) => d.slug);
 
   console.log(allPortfolioSlug);
 
@@ -84,17 +75,7 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context: MyContext) => {
   const id = context.params.slug;
 
-  const apiUrl = process.env.PROD_API_URL || "http://localhost:3000";
-
-  const response = await fetch(`${apiUrl}/api/single-portfolio`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ slug: id }),
-  });
-
-  const data = await response.json();
+  const data = await reader.collections.portfolios.read(id);
 
   return {
     props: {

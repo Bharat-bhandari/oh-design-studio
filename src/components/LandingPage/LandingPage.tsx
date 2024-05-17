@@ -24,7 +24,40 @@ import HomeMenu from "./HomeMenu";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
 
-const LandingPage = () => {
+type CarouselItem = {
+  slug: string;
+  entry: {
+    title: string;
+    client_name: string;
+    headline1: string;
+    headline2: string;
+    project_link: string;
+    project_image: string;
+  };
+};
+
+type PortfolioEntry = {
+  title: string;
+  client_name: string;
+  headline1: string;
+  headline2: string;
+  portfolio_category: string;
+  description: string;
+  project_bg_image: string;
+  portfolio_images: (string | null)[];
+};
+
+type PortfolioData = {
+  slug: string;
+  entry: PortfolioEntry;
+};
+
+type HomeProps = {
+  data: CarouselItem[];
+  portFolioData: PortfolioData[];
+};
+
+const LandingPage: React.FC<HomeProps> = ({ data, portFolioData }) => {
   const container = useRef<HTMLDivElement>(null);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -282,7 +315,7 @@ const LandingPage = () => {
         <div ref={container} id="mainContainer" className="">
           <div className="flex h-screen cursor-default ">
             <div className=" panel h-[75vh] my-auto  w-[96vw] pl-[4vw] flex-shrink-0 ">
-              <EmblaCarousalDesktop />
+              <EmblaCarousalDesktop data={data} />
             </div>
 
             <div className="bg-yellowBg panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
@@ -292,7 +325,7 @@ const LandingPage = () => {
               <HomeAboutUs2 />
             </div>
             <div className=" panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
-              <HomePortfolio />
+              <HomePortfolio portFolioData={portFolioData} />
             </div>
             <div className=" panel h-[75vh] my-auto w-screen   flex-shrink-0 ">
               <HomeClients />
