@@ -3,6 +3,7 @@ import PortfolioNav from "@/components/PortfolioPage/PortfolioNav";
 import React from "react";
 
 import { GetStaticPropsContext } from "next";
+import { reader } from "@/utils/reader";
 
 interface MyContext extends GetStaticPropsContext {
   params: {
@@ -64,23 +65,34 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context: MyContext) => {
   const id = context.params.portfolio;
 
-  const apiUrl = process.env.PROD_API_URL || "http://localhost:3000";
+  if (id === "all") {
+    const data = await reader.collections.portfolios.all();
 
-  const response = await fetch(`${apiUrl}/api/portfolio`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ slug: id }),
-  });
+    return {
+      props: {
+        data,
+      },
+    };
+  } else {
+    const allData = await reader.collections.portfolios.all();
 
-  const data = await response.json();
+    const data = allData.filter((item) => {
+      if (
+        id === "print" ||
+        id === "digital" ||
+        id === "packaging" ||
+        id === "environmental"
+      ) {
+        return item.entry.portfolio_category.includes(id);
+      }
+    });
 
-  return {
-    props: {
-      data,
-    },
-  };
+    return {
+      props: {
+        data,
+      },
+    };
+  }
 };
 
 export default Work;
